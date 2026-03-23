@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hoteleria - MVP de reservas (Full Booking + BD real)
 
 ## Getting Started
 
@@ -34,3 +34,26 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Hoteleria MVP (Reservas)
+
+Este MVP implementa un flujo básico de reservas con Next.js (App Router) y Prisma + SQLite.
+El estilo visual del flujo principal (`/`, `/rooms`, `/reservations/new`, `/reservations/[id]`) usa fondo oscuro y tipografia clara para mejor legibilidad.
+
+### Rutas
+
+- Home principal: `/`
+- Catálogo: `GET /rooms` (consume `GET /api/rooms`)
+- Crear reserva: `POST /api/bookings` desde el formulario en `/reservations/new`
+- Confirmación: `/reservations/[id]`
+
+### Setup local
+
+1. Instala dependencias: `npm install`
+2. Configura `.env`:
+   - Copia `.env.example` a `.env` (o define `DATABASE_URL` manualmente).
+3. Inicializa/crea el esquema en SQLite: `npx prisma db push`
+4. Carga seed de habitaciones: `node prisma/seed.js`
+5. Arranca el servidor: `npm run dev`
+
+Luego abre `http://localhost:3000/`.
