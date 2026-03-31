@@ -1,28 +1,26 @@
-# Agentes - Hoteleria
+## Principios
 
-## Estado del MVP
+- Mantener cambios pequeños y verificables (UI + API).
+- Evitar “magia” en el frontend: preferir componentes simples, estado explícito y UX responsive.
+- Documentar cambios críticos en `README.md` y esta guía.
 
-- Home principal de hoteleria en `/` (reemplaza la pagina por defecto de Next.js)
-- Estilo global del flujo principal con fuente clara y fondo oscuro (home, rooms, reserva, confirmacion)
-- Catálogo de habitaciones: `GET /api/rooms` + UI en `/rooms`
-- Reservas:
-  - Formulario: `POST /api/bookings` + UI en `/reservations/new`
-  - Confirmación: UI en `/reservations/[id]`
-- Persistencia:
-  - Prisma + SQLite (`dev.db`)
-  - Seed mínimo de habitaciones (`prisma/seed.js`)
+## Frontend
 
-## Progreso del plan
+- Next.js App Router (ver `app/`).
+- Tailwind CSS (ver `app/globals.css`).
+- Regla de UX: las vistas deben ser **responsivas** (mobile-first, luego `sm/ lg`).
 
-- `db-setup`: hecho
-- `db-seed`: hecho
-- `db-booking-validation`: hecho
-- `api-rooms`: hecho
-- `api-bookings`: hecho
-- `ui-rooms`: hecho
-- `ui-booking-form`: hecho
-- `ui-confirmation`: hecho
-- `validation`: hecho
-- `docs-gitignore`: en progreso/completado al finalizar esta sección
-- `qa`: pendiente
+## Convenciones para cambios de UI
 
+- La Home (`/`) sirve como landing + exploración rápida.
+- El catálogo (`/rooms`) concentra el listado “puro” de habitaciones.
+- La creación de reserva (`/reservations/new`) es el flujo real que consume `POST /api/bookings`.
+
+## Checklist antes de cerrar un cambio
+
+- Ejecutar `npm run dev` y validar:
+  - Home carga y muestra cards.
+  - Navegación a `/rooms` y “Reservar” funciona.
+- Revisar lint (`npm run lint`) si se tocó frontend.
+- Confirmar que `.gitignore` no sube:
+  - `node_modules/`, `.next/`, `.env*`, `dev.db*`, `.cursor/`.

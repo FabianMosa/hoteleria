@@ -38,7 +38,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Hoteleria MVP (Reservas)
 
 Este MVP implementa un flujo básico de reservas con Next.js (App Router) y Prisma + SQLite.
-El estilo visual del flujo principal (`/`, `/rooms`, `/reservations/new`, `/reservations/[id]`) usa fondo oscuro y tipografia clara para mejor legibilidad.
+La **Home** (`/`) ahora tiene un layout tipo “buscador + resultados” (inspirado en portales de reserva) con filtros laterales y cards responsivas.
+Las páginas del flujo (`/rooms`, `/reservations/new`, `/reservations/[id]`) mantienen un estilo oscuro para diferenciar el “catálogo/flujo” del landing.
+
+Nota: algunos filtros de la Home son **demo (MVP)** mientras el modelo de datos solo incluye `Room { name, description, capacity }`.
 
 ### Rutas
 
