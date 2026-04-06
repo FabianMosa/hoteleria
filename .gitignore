@@ -12,6 +12,7 @@
 # cursor (IDE)
 .cursor/
 .cursorrules/
+ia-team
 # testing
 /coverage
 
@@ -47,3 +48,5 @@ dev.db-shm
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+docs/GUIA-POSTGRES-DOCKER.md

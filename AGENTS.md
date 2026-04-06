@@ -24,3 +24,4 @@
 - Revisar lint (`npm run lint`) si se tocó frontend.
 - Confirmar que `.gitignore` no sube:
   - `node_modules/`, `.next/`, `.env*`, `dev.db*`, `.cursor/`.
+- **Base de datos:** PostgreSQL en Docker (`docker-compose.yml`). `DATABASE_URL` en `.env` (plantilla en `.env.example`). Scripts: `npm run db:up`, `db:push`, `db:seed`, `db:down`. Guía: `docs/GUIA-POSTGRES-DOCKER.md`.
