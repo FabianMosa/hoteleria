@@ -9,10 +9,13 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+
+/ai-team/
+
 # cursor (IDE)
 .cursor/
 .cursorrules/
-ia-team
+ai-team/
 # testing
 /coverage
 

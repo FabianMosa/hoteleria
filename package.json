@@ -13,7 +13,7 @@
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
     "db:push": "prisma db push",
-    "db:seed": "node prisma/seed.js"
+    "db:seed": "prisma db seed"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

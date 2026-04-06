@@ -20,8 +20,9 @@ function formatISODate(date) {
 }
 
 export default function HomeExplorer() {
-  // Buscador (UI): no bloquea el flujo actual; sirve para filtrar cards en Home.
-  const [destination, setDestination] = useState("Antofagasta");
+  // Buscador (UI): filtro por texto en nombre/descripción del seed (no hay campo "ciudad" en BD).
+  // Vacío = mostrar todas las habitaciones cargadas desde /api/rooms (evita 0 resultados al cargar).
+  const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState(() => formatISODate(new Date()));
   const [endDate, setEndDate] = useState("");
   const [guests, setGuests] = useState(2);
@@ -104,7 +105,7 @@ export default function HomeExplorer() {
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
             className="h-11 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-sm outline-none ring-zinc-900/10 focus:ring-4"
-            placeholder="Destino, nombre de hotel"
+            placeholder="Ej. Antofagasta (opcional; vacío = ver todo)"
             inputMode="search"
           />
         </label>
@@ -280,6 +281,12 @@ export default function HomeExplorer() {
             <div className="rounded-3xl border border-zinc-200 bg-zinc-50 p-6">
               <p className="text-sm text-zinc-700">
                 No encontramos resultados con esos filtros.
+                {rooms.length > 0 ? (
+                  <span className="mt-2 block text-xs text-zinc-500">
+                    Hay {rooms.length} habitación(es) en catálogo: prueba dejar el destino vacío o
+                    buscar por palabras del nombre (p. ej. “Suite”, “Doble”).
+                  </span>
+                ) : null}
               </p>
             </div>
           ) : (

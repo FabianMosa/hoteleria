@@ -1,68 +1,67 @@
-# Hoteleria - MVP de reservas (Full Booking + BD real)
+# Hotelería — MVP de reservas
 
-## Getting Started
+Aplicación **Next.js (App Router)** con **Prisma** y **PostgreSQL** en **Docker**. Flujo: catálogo de habitaciones → formulario de reserva → confirmación (`POST /api/bookings`).
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| Área | Tecnología |
+|------|------------|
+| Frontend | Next.js 16, React 19, Tailwind CSS 4 |
+| API | Route Handlers en `app/api/` |
+| Datos | Prisma 6, PostgreSQL 16 (imagen oficial vía `docker-compose.yml`) |
+| Cliente DB | `@prisma/client` + singleton en `src/lib/prisma.js` |
+
+## Inicio rápido
+
+1. `npm install` (ejecuta `postinstall` → `prisma generate`)
+2. Copia `.env.example` → `.env` y ajusta `DATABASE_URL` para que coincida con `POSTGRES_*` en `docker-compose.yml` (si la contraseña tiene caracteres especiales, codifícala en la URL)
+3. `npm run db:up`
+4. `npm run db:push`
+5. `npm run db:seed` (solo inserta habitaciones de ejemplo si la tabla `Room` está vacía)
+6. `npm run dev` → [http://localhost:3000](http://localhost:3000)
+
+Guía detallada (Docker local, Docker Hub, `psql`): [docs/GUIA-POSTGRES-DOCKER.md](./docs/GUIA-POSTGRES-DOCKER.md).
+
+## Scripts npm
+
+| Script | Descripción |
+|--------|-------------|
+| `dev` / `build` / `start` / `lint` | App Next.js estándar |
+| `db:up` / `db:down` | Levanta o detiene PostgreSQL (`docker compose`) |
+| `db:push` | Aplica el esquema Prisma a la BD (`prisma db push`) |
+| `db:seed` | Datos de ejemplo (`prisma db seed` → carga `.env`) |
+| `prisma:generate` / `prisma:validate` | Cliente y validación del schema |
+
+## Rutas y API
+
+| Ruta | Descripción |
+|------|-------------|
+| `/` | Landing con buscador demo + listado filtrable (consume `GET /api/rooms`) |
+| `/rooms` | Catálogo de habitaciones |
+| `/reservations/new` | Formulario → `POST /api/bookings` |
+| `/reservations/[id]` | Confirmación (lee reserva con Prisma) |
+| `GET /api/rooms` | Lista habitaciones |
+| `POST /api/bookings` | Crea reserva (validación + solapamiento) |
+
+## UI
+
+- **Home (`/`)**: estilo claro, buscador y filtros laterales (varios filtros son **demo** hasta extender el modelo).
+- **Destino en Home**: filtra por texto en **nombre o descripción** de la habitación. Vacío = muestra todo el catálogo.
+- **`/rooms` y reservas**: tema oscuro para diferenciar del landing.
+
+## Estructura útil
+
+```
+app/                 # páginas, layouts, API routes
+app/ui/              # componentes cliente reutilizables (p. ej. HomeExplorer)
+prisma/              # schema.prisma, seed.js
+src/lib/             # prisma.js (singleton), bookings/availability
+docs/                # guías (PostgreSQL + Docker)
+ai-team/             # roles/orquestación para flujos con agentes (no sustituye a AGENTS.md)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Notas
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Hoteleria MVP (Reservas)
-
-Este MVP implementa un flujo básico de reservas con Next.js (App Router) y **Prisma + PostgreSQL** (base local vía Docker).
-La **Home** (`/`) ahora tiene un layout tipo “buscador + resultados” (inspirado en portales de reserva) con filtros laterales y cards responsivas.
-Las páginas del flujo (`/rooms`, `/reservations/new`, `/reservations/[id]`) mantienen un estilo oscuro para diferenciar el “catálogo/flujo” del landing.
-
-Nota: algunos filtros de la Home son **demo (MVP)** mientras el modelo de datos solo incluye `Room { name, description, capacity }`.
-
-### Rutas
-
-- Home principal: `/`
-- Catálogo: `GET /rooms` (consume `GET /api/rooms`)
-- Crear reserva: `POST /api/bookings` desde el formulario en `/reservations/new`
-- Confirmación: `/reservations/[id]`
-
-### Setup local (PostgreSQL con Docker)
-
-Guía paso a paso (local + Docker Hub): [docs/GUIA-POSTGRES-DOCKER.md](./docs/GUIA-POSTGRES-DOCKER.md).
-
-1. Instala dependencias: `npm install`
-2. Copia `.env.example` a `.env` y revisa `DATABASE_URL` (debe coincidir con `docker-compose.yml`).
-3. Levanta PostgreSQL: `npm run db:up` (o `docker compose up -d`).
-4. Espera a que el contenedor esté listo (healthcheck) y aplica el esquema: `npm run db:push` (`prisma db push`).
-5. Carga datos de ejemplo: `npm run db:seed` (o `npx prisma db seed`).
-6. Arranca la app: `npm run dev`
-
-Para detener el contenedor: `npm run db:down`.
-
-**Nota:** Si antes usabas SQLite (`dev.db`), migra los datos a mano o empieza con una BD vacía en Postgres; el proveedor de Prisma ahora es `postgresql`.
-
-Luego abre `http://localhost:3000/`.
+- **Seed:** si ya existen filas en `Room`, el seed no duplica; verás mensaje en consola.
+- **SQLite:** el proveedor de Prisma es `postgresql`; un `dev.db` antiguo no se usa salvo que cambies el schema de vuelta.
+- Plantilla Next genérica: [documentación Next.js](https://nextjs.org/docs).

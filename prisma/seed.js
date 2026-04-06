@@ -9,7 +9,13 @@ async function main() {
 
   try {
     const existingCount = await prisma.room.count();
-    if (existingCount > 0) return;
+    if (existingCount > 0) {
+      // Importante: no es un error; evita duplicar habitaciones en cada seed.
+      console.log(
+        `[seed] Omitido: ya hay ${existingCount} habitación(es). Para volver a poblar, vacía la tabla Room o usa otra BD.`,
+      );
+      return;
+    }
 
     await prisma.room.createMany({
       data: [
@@ -30,6 +36,7 @@ async function main() {
         },
       ],
     });
+    console.log("[seed] OK: se insertaron 3 habitaciones de ejemplo.");
   } finally {
     await prisma.$disconnect();
   }
