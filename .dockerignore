@@ -1,0 +1,34 @@
+# Dependencias y artefactos locales
+node_modules
+.next
+out
+
+# Entorno y datos locales (Railway/Docker inyectan DATABASE_URL)
+.env
+.env.*
+!.env.example
+
+# Git y IDE
+.git
+.gitignore
+.cursor
+.cursorrules
+ai-team
+
+# SQLite legado / volúmenes
+dev.db
+dev.db-*
+
+# Docs y metadatos no necesarios en la imagen
+*.md
+docs
+ai-team
+
+# Tests / cobertura (si se añaden)
+coverage
+.nyc_output
+
+# Prisma
+prisma/seed.js
+prisma/sql
+prisma/schema.prisma

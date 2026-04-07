@@ -4,12 +4,12 @@ Aplicación **Next.js (App Router)** con **Prisma** y **PostgreSQL** en **Docker
 
 ## Stack
 
-| Área | Tecnología |
-|------|------------|
-| Frontend | Next.js 16, React 19, Tailwind CSS 4 |
-| API | Route Handlers en `app/api/` |
-| Datos | Prisma 6, PostgreSQL 16 (imagen oficial vía `docker-compose.yml`) |
-| Cliente DB | `@prisma/client` + singleton en `src/lib/prisma.js` |
+| Área       | Tecnología                                                        |
+| ---------- | ----------------------------------------------------------------- |
+| Frontend   | Next.js 16, React 19, Tailwind CSS 4                              |
+| API        | Route Handlers en `app/api/`                                      |
+| Datos      | Prisma 6, PostgreSQL 16 (imagen oficial vía `docker-compose.yml`) |
+| Cliente DB | `@prisma/client` + singleton en `src/lib/prisma.js`               |
 
 ## Inicio rápido
 
@@ -24,24 +24,24 @@ Guía detallada (Docker local, Docker Hub, `psql`): [docs/GUIA-POSTGRES-DOCKER.m
 
 ## Scripts npm
 
-| Script | Descripción |
-|--------|-------------|
-| `dev` / `build` / `start` / `lint` | App Next.js estándar |
-| `db:up` / `db:down` | Levanta o detiene PostgreSQL (`docker compose`) |
-| `db:push` | Aplica el esquema Prisma a la BD (`prisma db push`) |
-| `db:seed` | Datos de ejemplo (`prisma db seed` → carga `.env`) |
-| `prisma:generate` / `prisma:validate` | Cliente y validación del schema |
+| Script                                | Descripción                                         |
+| ------------------------------------- | --------------------------------------------------- |
+| `dev` / `build` / `start` / `lint`    | App Next.js estándar                                |
+| `db:up` / `db:down`                   | Levanta o detiene PostgreSQL (`docker compose`)     |
+| `db:push`                             | Aplica el esquema Prisma a la BD (`prisma db push`) |
+| `db:seed`                             | Datos de ejemplo (`prisma db seed` → carga `.env`)  |
+| `prisma:generate` / `prisma:validate` | Cliente y validación del schema                     |
 
 ## Rutas y API
 
-| Ruta | Descripción |
-|------|-------------|
-| `/` | Landing con buscador demo + listado filtrable (consume `GET /api/rooms`) |
-| `/rooms` | Catálogo de habitaciones |
-| `/reservations/new` | Formulario → `POST /api/bookings` |
-| `/reservations/[id]` | Confirmación (lee reserva con Prisma) |
-| `GET /api/rooms` | Lista habitaciones |
-| `POST /api/bookings` | Crea reserva (validación + solapamiento) |
+| Ruta                 | Descripción                                                              |
+| -------------------- | ------------------------------------------------------------------------ |
+| `/`                  | Landing con buscador demo + listado filtrable (consume `GET /api/rooms`) |
+| `/rooms`             | Catálogo de habitaciones                                                 |
+| `/reservations/new`  | Formulario → `POST /api/bookings`                                        |
+| `/reservations/[id]` | Confirmación (lee reserva con Prisma)                                    |
+| `GET /api/rooms`     | Lista habitaciones                                                       |
+| `POST /api/bookings` | Crea reserva (validación + solapamiento)                                 |
 
 ## UI
 
@@ -56,7 +56,6 @@ app/                 # páginas, layouts, API routes
 app/ui/              # componentes cliente reutilizables (p. ej. HomeExplorer)
 prisma/              # schema.prisma, seed.js
 src/lib/             # prisma.js (singleton), bookings/availability
-docs/                # guías (PostgreSQL + Docker)
 ai-team/             # roles/orquestación para flujos con agentes (no sustituye a AGENTS.md)
 ```
 

@@ -10,12 +10,12 @@
 !.yarn/releases
 !.yarn/versions
 
-/ai-team/
 
 # cursor (IDE)
 .cursor/
 .cursorrules/
 ai-team/
+
 # testing
 /coverage
 
@@ -52,4 +52,4 @@ dev.db-shm
 *.tsbuildinfo
 next-env.d.ts
 
-docs/GUIA-POSTGRES-DOCKER.md
+docs/

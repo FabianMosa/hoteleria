@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  // Imagen Docker mínima: empaqueta solo dependencias trazadas (ver Dockerfile).
+  output: "standalone",
 };
 
 export default nextConfig;
