@@ -106,6 +106,7 @@ export default function HomeExplorer() {
             onChange={(e) => setDestination(e.target.value)}
             className="h-11 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-sm outline-none ring-zinc-900/10 focus:ring-4"
             placeholder="Ej. Antofagasta (opcional; vacío = ver todo)"
+            data-testid="destination-input"
             inputMode="search"
           />
         </label>
