@@ -28,7 +28,6 @@ ai-team
 coverage
 .nyc_output
 
-# Prisma
+# Prisma: no excluir prisma/schema.prisma — el Dockerfile copia prisma/ antes de npm ci y postinstall ejecuta prisma generate.
 prisma/seed.js
 prisma/sql
-prisma/schema.prisma

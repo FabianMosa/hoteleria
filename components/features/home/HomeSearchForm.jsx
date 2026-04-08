@@ -16,37 +16,53 @@ export default function HomeSearchForm({
 }) {
   return (
     <div className="grid gap-3 p-4 sm:grid-cols-[1.2fr_0.9fr_0.9fr_0.7fr_auto] sm:items-end sm:gap-2 sm:p-5">
-      <label className="grid gap-1">
-        <span className="text-xs font-medium text-zinc-700">¿A dónde quieres ir?</span>
+      <div className="grid gap-1">
+        <span
+          className="text-xs font-medium text-zinc-700"
+          id="destination-label"
+        >
+          ¿A dónde quieres ir?
+        </span>
         <input
+          aria-labelledby="destination-label"
           value={destination}
           onChange={(e) => onDestinationChange(e.target.value)}
           className="h-11 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-sm outline-none ring-zinc-900/10 focus:ring-4"
-          placeholder="Ej. Antofagasta (opcional; vacío = ver todo)"
+          placeholder="Antofagasta"
           data-testid="destination-input"
           inputMode="search"
+          autoComplete="off"
         />
-      </label>
+      </div>
 
-      <label className="grid gap-1">
-        <span className="text-xs font-medium text-zinc-700">¿Cuándo llegarás?</span>
+      <div className="grid gap-1">
+        <span
+          className="text-xs font-medium text-zinc-700"
+          id="start-date-label"
+        >
+          ¿Cuándo llegarás?
+        </span>
         <input
           type="date"
+          aria-labelledby="start-date-label"
           value={startDate}
           onChange={(e) => onStartDateChange(e.target.value)}
           className="h-11 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-sm outline-none ring-zinc-900/10 focus:ring-4"
         />
-      </label>
+      </div>
 
-      <label className="grid gap-1">
-        <span className="text-xs font-medium text-zinc-700">¿Cuándo saldrás?</span>
+      <div className="grid gap-1">
+        <span className="text-xs font-medium text-zinc-700" id="end-date-label">
+          ¿Cuándo saldrás?
+        </span>
         <input
           type="date"
+          aria-labelledby="end-date-label"
           value={endDate}
           onChange={(e) => onEndDateChange(e.target.value)}
           className="h-11 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-sm outline-none ring-zinc-900/10 focus:ring-4"
         />
-      </label>
+      </div>
 
       <label className="grid gap-1">
         <span className="text-xs font-medium text-zinc-700">Huéspedes</span>

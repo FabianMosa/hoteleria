@@ -130,22 +130,22 @@ export default function ReservationsNewForm({ initialRoomId }) {
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-2xl border border-zinc-700 bg-zinc-900 p-6"
+      className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
     >
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-100">
+          <label className="text-sm font-medium text-zinc-700">
             Habitación
           </label>
           {roomsStatus === "loading" ? (
-            <div className="h-10 rounded-lg bg-zinc-800 animate-pulse" />
+            <div className="h-10 animate-pulse rounded-lg bg-zinc-100" />
           ) : roomsStatus === "error" ? (
-            <div className="text-sm text-red-300">{roomsError}</div>
+            <div className="text-sm text-red-700">{roomsError}</div>
           ) : (
             <select
               value={roomId}
               onChange={(e) => setRoomId(e.target.value)}
-              className="h-10 rounded-xl border border-zinc-700 bg-zinc-950 px-3 text-zinc-50"
+              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
               required
             >
               {rooms.map((room) => (
@@ -158,20 +158,20 @@ export default function ReservationsNewForm({ initialRoomId }) {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-100">
+          <label className="text-sm font-medium text-zinc-700">
             Nombre
           </label>
           <input
             value={guestName}
             onChange={(e) => setGuestName(e.target.value)}
             placeholder="Tu nombre"
-            className="h-10 rounded-xl border border-zinc-700 bg-zinc-950 px-3 text-zinc-50"
+            className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
             required
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-100">
+          <label className="text-sm font-medium text-zinc-700">
             Email
           </label>
           <input
@@ -179,13 +179,13 @@ export default function ReservationsNewForm({ initialRoomId }) {
             onChange={(e) => setGuestEmail(e.target.value)}
             placeholder="tu@email.com"
             type="email"
-            className="h-10 rounded-xl border border-zinc-700 bg-zinc-950 px-3 text-zinc-50"
+            className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
             required
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-100">
+          <label className="text-sm font-medium text-zinc-700">
             Check-in / Check-out
           </label>
           <div className="grid grid-cols-2 gap-3">
@@ -193,14 +193,14 @@ export default function ReservationsNewForm({ initialRoomId }) {
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               type="date"
-              className="h-10 rounded-xl border border-zinc-700 bg-zinc-950 px-3 text-zinc-50"
+              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
               required
             />
             <input
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
               type="date"
-              className="h-10 rounded-xl border border-zinc-700 bg-zinc-950 px-3 text-zinc-50"
+              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
               required
             />
           </div>
@@ -208,8 +208,8 @@ export default function ReservationsNewForm({ initialRoomId }) {
       </div>
 
       {formError ? (
-        <div className="mt-4 rounded-xl border border-red-700/60 bg-red-950/30 p-3">
-          <p className="text-sm text-red-200">{formError}</p>
+        <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3">
+          <p className="text-sm text-red-800">{formError}</p>
         </div>
       ) : null}
 
@@ -217,7 +217,7 @@ export default function ReservationsNewForm({ initialRoomId }) {
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center justify-center rounded-full bg-zinc-100 text-zinc-950 px-5 py-2.5 text-sm font-medium hover:bg-zinc-200 transition-colors disabled:opacity-60"
+          className="inline-flex items-center justify-center rounded-full bg-zinc-950 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:opacity-60"
         >
           {submitting ? "Creando..." : "Confirmar reserva"}
         </button>

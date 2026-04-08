@@ -15,7 +15,7 @@ export default function RoomsList() {
         {Array.from({ length: 6 }).map((_, idx) => (
           <div
             key={idx}
-            className="h-40 animate-pulse rounded-2xl border border-zinc-700 bg-zinc-900"
+            className="h-40 animate-pulse rounded-2xl border border-zinc-200 bg-zinc-100"
           />
         ))}
       </div>
@@ -24,16 +24,18 @@ export default function RoomsList() {
 
   if (status === "error") {
     return (
-      <div className="rounded-2xl border border-red-700/60 bg-red-950/30 p-4">
-        <p className="text-red-200">{errorMessage}</p>
+      <div className="rounded-2xl border border-red-200 bg-red-50 p-4">
+        <p className="text-red-800">{errorMessage}</p>
       </div>
     );
   }
 
   if (rooms.length === 0) {
     return (
-      <div className="rounded-2xl border border-zinc-700 bg-zinc-900 p-6">
-        <p className="text-zinc-200">No hay habitaciones disponibles por el momento.</p>
+      <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+        <p className="text-zinc-600">
+          No hay habitaciones disponibles por el momento.
+        </p>
       </div>
     );
   }

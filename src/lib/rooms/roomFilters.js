@@ -11,12 +11,30 @@ export function normalizeString(value) {
 }
 
 /**
+ * Clasifica el tipo de habitación para el filtro lateral: prioriza palabras en el nombre
+ * y, si no hay coincidencia, usa capacidad como respaldo (1 / 2 / resto).
+ * @param {{ name?: string, capacity?: number }} room
+ * @returns {'individual' | 'doble' | 'suite'}
+ */
+export function inferRoomKind(room) {
+  const n = normalizeString(room?.name);
+  if (n.includes("individual")) return "individual";
+  if (n.includes("doble")) return "doble";
+  if (n.includes("suite")) return "suite";
+  const c = Number(room?.capacity ?? 0);
+  if (c <= 1) return "individual";
+  if (c === 2) return "doble";
+  return "suite";
+}
+
+/**
  * @param {Array<{ id?: string, name?: string, description?: string, capacity?: number }>} rooms
  * @param {{
  *   destination: string,
  *   minCapacity: number,
- *   brandIbis: boolean,
- *   brandStyles: boolean,
+ *   typeIndividual: boolean,
+ *   typeDoble: boolean,
+ *   typeSuite: boolean,
  *   accessibility: boolean,
  * }} criteria
  */
@@ -31,11 +49,11 @@ export function filterRooms(rooms, criteria) {
     const matchesCapacity =
       Number(room?.capacity ?? 0) >= Number(criteria.minCapacity ?? 1);
 
-    const idString = String(room?.id ?? "");
-    const hash = Array.from(idString).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
-    const isIbis = hash % 2 === 0;
-    const matchesBrand =
-      (isIbis && criteria.brandIbis) || (!isIbis && criteria.brandStyles);
+    const kind = inferRoomKind(room);
+    const matchesType =
+      (kind === "individual" && criteria.typeIndividual) ||
+      (kind === "doble" && criteria.typeDoble) ||
+      (kind === "suite" && criteria.typeSuite);
 
     const matchesAccessibility =
       !criteria.accessibility || Number(room?.capacity ?? 0) >= 2;
@@ -43,7 +61,7 @@ export function filterRooms(rooms, criteria) {
     return (
       matchesQuery &&
       matchesCapacity &&
-      matchesBrand &&
+      matchesType &&
       matchesAccessibility
     );
   });

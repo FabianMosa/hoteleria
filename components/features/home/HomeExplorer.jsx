@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { useRooms } from "@/src/lib/hooks/useRooms";
 import { filterRooms } from "@/src/lib/rooms/roomFilters";
-import { formatISODate } from "@/src/lib/rooms/dateUtils";
 import HomeSearchForm from "./HomeSearchForm";
 import HomeFilterSidebar from "./HomeFilterSidebar";
 import HomeResultsSection from "./HomeResultsSection";
@@ -16,12 +15,14 @@ export default function HomeExplorer() {
   const { rooms, status } = useRooms();
 
   const [destination, setDestination] = useState("");
-  const [startDate, setStartDate] = useState(() => formatISODate(new Date()));
+  // Fechas vacías hasta que el usuario elija (evita imponer “hoy” en el date picker).
+  const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [guests, setGuests] = useState(2);
   const [minCapacity, setMinCapacity] = useState(1);
-  const [brandIbis, setBrandIbis] = useState(true);
-  const [brandStyles, setBrandStyles] = useState(true);
+  const [typeIndividual, setTypeIndividual] = useState(true);
+  const [typeDoble, setTypeDoble] = useState(true);
+  const [typeSuite, setTypeSuite] = useState(true);
   const [accessibility, setAccessibility] = useState(false);
 
   const filteredRooms = useMemo(
@@ -29,11 +30,20 @@ export default function HomeExplorer() {
       filterRooms(rooms, {
         destination,
         minCapacity,
-        brandIbis,
-        brandStyles,
+        typeIndividual,
+        typeDoble,
+        typeSuite,
         accessibility,
       }),
-    [rooms, destination, minCapacity, brandIbis, brandStyles, accessibility],
+    [
+      rooms,
+      destination,
+      minCapacity,
+      typeIndividual,
+      typeDoble,
+      typeSuite,
+      accessibility,
+    ],
   );
 
   const bookingQuery = useMemo(() => {
@@ -64,10 +74,12 @@ export default function HomeExplorer() {
 
       <div className="grid gap-6 p-4 sm:grid-cols-[260px_1fr] sm:p-6">
         <HomeFilterSidebar
-          brandIbis={brandIbis}
-          onBrandIbisChange={setBrandIbis}
-          brandStyles={brandStyles}
-          onBrandStylesChange={setBrandStyles}
+          typeIndividual={typeIndividual}
+          onTypeIndividualChange={setTypeIndividual}
+          typeDoble={typeDoble}
+          onTypeDobleChange={setTypeDoble}
+          typeSuite={typeSuite}
+          onTypeSuiteChange={setTypeSuite}
           minCapacity={minCapacity}
           onMinCapacityChange={setMinCapacity}
           accessibility={accessibility}
