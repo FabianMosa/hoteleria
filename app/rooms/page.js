@@ -1,4 +1,4 @@
-import RoomsList from "./RoomsList";
+import RoomsList from "@/components/features/rooms/RoomsList";
 
 export default function RoomsPage() {
   return (
