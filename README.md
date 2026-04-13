@@ -22,7 +22,17 @@ npm run lint
 npm test
 ```
 
-Base de datos local: `docker-compose.yml`, `npm run db:up`, `db:push`, `db:seed`. Ver `docs/GUIA-POSTGRES-DOCKER.md` y `docs/DEPLOY-DOCKER-HUB-RAILWAY.md`. Imagen de producción (`Dockerfile`): el contexto de build debe incluir `prisma/schema.prisma` (no ignorarlo en `.dockerignore`).
+### Railway / PostgreSQL
+
+- Variable `DATABASE_URL` (cadena `postgresql://…` que provee Railway).
+- Migraciones versionadas en `prisma/migrations/`: `npx prisma migrate deploy`.
+- Ajuste rápido del esquema en entornos de prueba (sin nueva migración): `npm run db:push` — usar con cuidado si compartes la misma BD que producción.
+- Datos de ejemplo: `npm run db:seed` (idempotente si ya hay habitaciones). El modelo `Room` incluye `imageUrl` opcional (URLs absolutas); el seed demo usa Unsplash — si añades otro dominio de imágenes, configura `images.remotePatterns` en `next.config.mjs`.
+
+### Demo portafolio (solo lectura)
+
+- En `.env`: `NEXT_PUBLIC_PORTFOLIO_DEMO=true` — sin formulario de reserva, `POST /api/bookings` responde 403, CTAs de reserva deshabilitados en UI.
+- Plantilla de variables: [.env.example](./.env.example).
 
 ## Stack
 

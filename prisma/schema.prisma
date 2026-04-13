@@ -16,6 +16,8 @@ model Room {
   id          String    @id @default(cuid())
   name        String
   description String?
+  /// URL pública de foto (CDN o almacenamiento); opcional para compatibilidad con datos antiguos.
+  imageUrl    String?
   capacity    Int
   createdAt   DateTime  @default(now())
 

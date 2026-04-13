@@ -22,6 +22,7 @@ vi.mock('../../../src/lib/bookings/availability', () => ({
 describe('POST /api/bookings (Medium Test)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    delete process.env.NEXT_PUBLIC_PORTFOLIO_DEMO;
   });
 
   function createRequest(body) {
@@ -29,6 +30,24 @@ describe('POST /api/bookings (Medium Test)', () => {
       json: vi.fn().mockResolvedValue(body),
     };
   }
+
+  it('debe fallar (403) en modo portafolio demo', async () => {
+    process.env.NEXT_PUBLIC_PORTFOLIO_DEMO = 'true';
+
+    const req = createRequest({
+      roomId: '123',
+      guestName: 'Juan',
+      guestEmail: 'juan@test.com',
+      startDate: '2026-01-01',
+      endDate: '2026-01-05',
+    });
+
+    const res = await POST(req);
+    const json = await res.json();
+
+    expect(res.status).toBe(403);
+    expect(json.error).toMatch(/demostración/i);
+  });
 
   it('debe fallar (400) si faltan datos requeridos', async () => {
     const req = createRequest({ roomId: '123' }); // faltan fechas y emails

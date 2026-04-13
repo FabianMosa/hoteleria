@@ -1,5 +1,6 @@
 import prisma from "../../../src/lib/prisma";
 import { findOverlappingConfirmedBooking } from "../../../src/lib/bookings/availability";
+import { isPortfolioDemo } from "../../../src/lib/portfolioDemo";
 
 function parseNonEmptyString(value, fieldName) {
   if (typeof value !== "string") return null;
@@ -22,6 +23,17 @@ function isValidEmail(value) {
 
 export async function POST(req) {
   try {
+    // Portafolio demo: sin creación de reservas (defensa en profundidad).
+    if (isPortfolioDemo()) {
+      return Response.json(
+        {
+          error:
+            "Modo demostración: las reservas están desactivadas en este despliegue.",
+        },
+        { status: 403 },
+      );
+    }
+
     const body = await req.json();
 
     const roomId = parseNonEmptyString(body.roomId, "roomId");

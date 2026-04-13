@@ -23,16 +23,22 @@ async function main() {
           name: "Habitación Individual",
           description: "Cama individual, ideal para estancias cortas.",
           capacity: 1,
+          imageUrl:
+            "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80",
         },
         {
           name: "Habitación Doble",
           description: "Dos camas o una cama king (según disponibilidad).",
           capacity: 2,
+          imageUrl:
+            "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
         },
         {
           name: "Suite",
           description: "Espacio adicional y mayor comodidad.",
           capacity: 3,
+          imageUrl:
+            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
         },
       ],
     });

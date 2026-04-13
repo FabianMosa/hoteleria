@@ -15,8 +15,14 @@ export default function RoomsList() {
         {Array.from({ length: 6 }).map((_, idx) => (
           <div
             key={idx}
-            className="h-40 animate-pulse rounded-2xl border border-zinc-200 bg-zinc-100"
-          />
+            className="flex animate-pulse flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100"
+          >
+            <div className="aspect-[4/3] bg-zinc-200 sm:aspect-[3/2]" />
+            <div className="h-24 p-5">
+              <div className="mb-2 h-4 w-2/3 rounded bg-zinc-200" />
+              <div className="h-3 w-full rounded bg-zinc-200" />
+            </div>
+          </div>
         ))}
       </div>
     );

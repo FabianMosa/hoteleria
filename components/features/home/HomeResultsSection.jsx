@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HomeRoomCard from "./HomeRoomCard";
+import { isPortfolioDemo } from "@/src/lib/portfolioDemo";
 
 /**
  * Zona de resultados: título, estados de carga/error/vacío y grid de cards.
@@ -11,6 +12,8 @@ export default function HomeResultsSection({
   filteredRooms,
   bookingQuery,
 }) {
+  const portfolioDemo = isPortfolioDemo();
+
   return (
     <section className="order-1 sm:order-2">
       <header className="mb-4 flex items-end justify-between gap-4">
@@ -72,7 +75,12 @@ export default function HomeResultsSection({
               bookingQuery ? `&${bookingQuery}` : ""
             }`;
             return (
-              <HomeRoomCard key={roomId} room={room} reserveHref={reserveHref} />
+              <HomeRoomCard
+                key={roomId}
+                room={room}
+                reserveHref={reserveHref}
+                portfolioDemo={portfolioDemo}
+              />
             );
           })}
         </div>
