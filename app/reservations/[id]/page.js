@@ -12,18 +12,13 @@ export default async function ReservationConfirmationPage({ params }) {
 
   if (typeof bookingId !== "string" || !bookingId) {
     return (
-      <div className="flex flex-1 flex-col bg-zinc-50 text-zinc-950">
-        <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="flex flex-1 flex-col bg-background text-foreground">
+        <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
           <div className="rounded-2xl border border-red-200 bg-red-50 p-6">
-            <p className="font-medium text-red-800">
-              Reserva inválida.
-            </p>
+            <p className="font-medium text-red-800">Solicitud no válida</p>
             <div className="mt-4">
-              <Link
-                href="/rooms"
-                className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100"
-              >
-                Volver a habitaciones
+              <Link href="/rooms" className="hotel-btn-secondary">
+                Volver al catálogo
               </Link>
             </div>
           </div>
@@ -45,18 +40,15 @@ export default async function ReservationConfirmationPage({ params }) {
 
   if (!booking) {
     return (
-      <div className="flex flex-1 flex-col bg-zinc-50 text-zinc-950">
-        <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="flex flex-1 flex-col bg-background text-foreground">
+        <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
           <div className="rounded-2xl border border-red-200 bg-red-50 p-6">
             <p className="font-medium text-red-800">
-              No encontramos esa reserva.
+              No encontramos una reserva con ese código.
             </p>
             <div className="mt-4">
-              <Link
-                href="/rooms"
-                className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100"
-              >
-                Volver a habitaciones
+              <Link href="/rooms" className="hotel-btn-secondary">
+                Ver habitaciones
               </Link>
             </div>
           </div>
@@ -66,84 +58,78 @@ export default async function ReservationConfirmationPage({ params }) {
   }
 
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50 text-zinc-950">
-      <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
-        <header className="mb-6">
-          <h1 className="text-3xl font-semibold tracking-tight">
-            Reserva confirmada
+    <div className="flex flex-1 flex-col bg-background text-foreground">
+      <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        <header className="mb-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+            Confirmación
+          </p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+            ¡Listo, {(booking.guestName || "Huésped").trim().split(/\s+/)[0]}!
           </h1>
-          <p className="mt-2 text-zinc-600">
-            Gracias. Aquí tienes el resumen de tu solicitud.
+          <p className="mt-3 text-sm leading-relaxed text-muted-hotel sm:text-base">
+            Tu estadía quedó registrada. Guardá este resumen o el número de reserva.
           </p>
         </header>
 
-        <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-          <dl className="grid gap-4 sm:grid-cols-2">
+        <section className="hotel-shell rounded-2xl bg-surface p-6 sm:p-8">
+          <dl className="grid gap-5 sm:grid-cols-2">
             <div>
-              <dt className="text-sm font-medium text-zinc-500">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
                 Habitación
               </dt>
-              <dd className="mt-1 font-semibold text-zinc-950">
+              <dd className="mt-1 text-base font-semibold text-foreground">
                 {booking.room.name}
               </dd>
             </div>
 
             <div>
-              <dt className="text-sm font-medium text-zinc-500">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
                 Estado
               </dt>
-              <dd className="mt-1 font-semibold text-zinc-950">
+              <dd className="mt-1 text-base font-semibold text-foreground">
                 {booking.status}
               </dd>
             </div>
 
             <div>
-              <dt className="text-sm font-medium text-zinc-500">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
                 Check-in
               </dt>
-              <dd className="mt-1 text-zinc-950">
-                {formatDate(booking.startDate)}
-              </dd>
+              <dd className="mt-1 text-foreground">{formatDate(booking.startDate)}</dd>
             </div>
 
             <div>
-              <dt className="text-sm font-medium text-zinc-500">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
                 Check-out
               </dt>
-              <dd className="mt-1 text-zinc-950">
-                {formatDate(booking.endDate)}
-              </dd>
+              <dd className="mt-1 text-foreground">{formatDate(booking.endDate)}</dd>
             </div>
 
             <div>
-              <dt className="text-sm font-medium text-zinc-500">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
                 Huésped
               </dt>
-              <dd className="mt-1 text-zinc-950">
-                {booking.guestName}
-              </dd>
+              <dd className="mt-1 text-foreground">{booking.guestName}</dd>
             </div>
 
             <div>
-              <dt className="text-sm font-medium text-zinc-500">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
                 Email
               </dt>
-              <dd className="mt-1 text-zinc-950">
-                {booking.guestEmail}
-              </dd>
+              <dd className="mt-1 break-all text-foreground">{booking.guestEmail}</dd>
             </div>
           </dl>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="text-sm text-zinc-600">
-              ID de reserva:{" "}
-              <span className="font-mono text-zinc-950">{booking.id}</span>
+          <div className="mt-8 flex flex-col gap-4 border-t border-border-hotel pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="text-sm text-muted-hotel">
+              N.º de reserva:{" "}
+              <span className="font-mono text-sm font-medium text-foreground">
+                {booking.id}
+              </span>
             </div>
-            <Link
-              href="/rooms"
-              className="inline-flex items-center justify-center rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800"
-            >
-              Reservar otra vez
+            <Link href="/rooms" className="hotel-btn-primary w-full sm:w-auto">
+              Reservar otra estadía
             </Link>
           </div>
         </section>
@@ -151,4 +137,3 @@ export default async function ReservationConfirmationPage({ params }) {
     </div>
   );
 }
-

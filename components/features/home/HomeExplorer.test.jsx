@@ -24,7 +24,7 @@ describe("HomeExplorer (Basic Component Test)", () => {
   it("debe renderizar el título, campos de búsqueda e invocar fetch", async () => {
     render(<HomeExplorer />);
 
-    expect(screen.getByText("Descubre nuestros hoteles")).toBeInTheDocument();
+    expect(screen.getByText("Nuestras habitaciones")).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText("Suite Presidential")).toBeInTheDocument();

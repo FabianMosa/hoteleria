@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 /**
- * Cabecera visual de tarjeta de habitación: foto remota o degradado de respaldo (tema claro).
+ * Cabecera de tarjeta: foto con leve viñeta inferior o degradado de respaldo.
  */
 export default function RoomCoverImage({
   imageUrl,
@@ -10,20 +10,26 @@ export default function RoomCoverImage({
 }) {
   return (
     <div
-      className={`relative w-full overflow-hidden bg-zinc-100 ${aspectClassName}`}
+      className={`relative w-full overflow-hidden bg-surface-muted ${aspectClassName}`}
     >
       {imageUrl ? (
-        <Image
-          src={imageUrl}
-          alt={alt}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          priority={false}
-        />
+        <>
+          <Image
+            src={imageUrl}
+            alt={alt}
+            fill
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={false}
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foreground/[0.12] via-transparent to-transparent"
+            aria-hidden
+          />
+        </>
       ) : (
         <div
-          className="absolute inset-0 bg-gradient-to-br from-zinc-100 via-white to-sky-100"
+          className="absolute inset-0 bg-gradient-to-br from-brand-soft/90 via-surface to-surface-muted"
           aria-hidden
         />
       )}

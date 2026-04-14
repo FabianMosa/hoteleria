@@ -8,7 +8,24 @@ async function main() {
   const prisma = new PrismaClient();
 
   try {
-    const existingCount = await prisma.room.count();
+    let existingCount;
+    try {
+      existingCount = await prisma.room.count();
+    } catch (e) {
+      // P2021: tabla inexistente — la BD no recibió migraciones (`prisma migrate deploy`).
+      if (e?.code === "P2021") {
+        console.error(
+          "[seed] No existe la tabla Room. Aplica el esquema antes de sembrar datos, por ejemplo:",
+        );
+        console.error("     npm run db:migrate   # o: npx prisma migrate deploy");
+        console.error(
+          "     (en desarrollo con BD vacía también sirve: npx prisma migrate dev)",
+        );
+        process.exit(1);
+      }
+      throw e;
+    }
+
     if (existingCount > 0) {
       // Importante: no es un error; evita duplicar habitaciones en cada seed.
       console.log(

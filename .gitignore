@@ -53,3 +53,6 @@ dev.db-shm
 next-env.d.ts
 
 docs/
+
+AGENTS.md
+STACK.mds

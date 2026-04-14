@@ -1,47 +1,73 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { isPortfolioDemo } from "@/src/lib/portfolioDemo";
 
 /**
- * Cabecera global del landing claro (`/`).
- * Layout compartido; copy enlaces según producto (`@content` / `@ux`).
+ * Cabecera fija: marca, estado de ruta en enlaces y CTA según modo portafolio (sin login).
  */
 export default function SiteHeader() {
   const portfolioDemo = isPortfolioDemo();
+  const pathname = usePathname() ?? "";
+  const isRooms = pathname === "/rooms";
+  const isHome = pathname === "/";
+  const isReservations = pathname.startsWith("/reservations");
 
   return (
-    <header className="border-b border-zinc-200 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3">
-          <div className="grid h-9 w-9 place-items-center rounded-lg bg-zinc-950 text-white">
+    <header className="sticky top-0 z-40 border-b border-border-hotel/80 bg-surface/80 shadow-[0_1px_0_rgb(28_25_23_/4%)] backdrop-blur-xl backdrop-saturate-150">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+        <Link
+          href="/"
+          className="group flex min-w-0 items-center gap-3 rounded-xl outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+        >
+          <div
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand to-brand-hover text-sm font-bold text-white shadow-md ring-1 ring-white/25 transition-transform duration-200 group-hover:scale-[1.03]"
+            aria-hidden
+          >
             H
           </div>
-          <div className="leading-tight">
-            <p className="text-sm font-semibold">Hotelería</p>
-            <p className="text-xs text-zinc-500">
-              {portfolioDemo ? "Demo portafolio (solo lectura)" : "MVP de reservas"}
+          <div className="min-w-0 leading-tight">
+            <p className="truncate text-sm font-semibold tracking-tight text-foreground">
+              Hotelería
+            </p>
+            <p className="truncate text-xs text-muted-hotel">
+              {portfolioDemo
+                ? "Demo — solo exploración"
+                : "Reservas directas, sin complicaciones"}
             </p>
           </div>
-        </div>
+        </Link>
 
-        <nav className="flex flex-wrap items-center justify-end gap-2">
+        <nav
+          className="flex flex-wrap items-center justify-end gap-1.5 sm:gap-2"
+          aria-label="Principal"
+        >
+          <Link
+            href="/"
+            className={`hotel-link-nav hidden sm:inline-flex ${isHome ? "hotel-link-nav-active" : ""}`}
+          >
+            Inicio
+          </Link>
           <Link
             href="/rooms"
-            className="hidden sm:inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100"
+            className={`hotel-link-nav hidden sm:inline-flex ${isRooms ? "hotel-link-nav-active" : ""}`}
           >
             Habitaciones
           </Link>
-          {portfolioDemo ? (
-            <span className="inline-flex max-w-[11rem] items-center justify-center rounded-full border border-amber-200 bg-amber-50 px-3 py-2 text-center text-xs font-medium text-amber-900 sm:max-w-none sm:px-4 sm:text-sm">
-              Sin datos de prueba
-            </span>
-          ) : (
-            <Link
-              href="/login"
-              className="inline-flex items-center justify-center rounded-full bg-zinc-950 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800"
-            >
-              Iniciar sesión
-            </Link>
-          )}
+          {/* En modo portafolio el envío sigue bloqueado en API; el CTA lleva al formulario en vista previa. */}
+          <Link
+            href="/rooms"
+            className={`hotel-link-nav inline-flex sm:hidden ${isRooms ? "hotel-link-nav-active" : ""}`}
+          >
+            Catálogo
+          </Link>
+          <Link
+            href="/reservations/new"
+            className={`hotel-btn-primary px-4 sm:ml-1 sm:px-5 ${isReservations ? "ring-2 ring-brand-soft ring-offset-2 ring-offset-surface" : ""}`}
+          >
+            Reservar
+          </Link>
         </nav>
       </div>
     </header>

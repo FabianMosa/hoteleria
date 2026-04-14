@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Barra de búsqueda del home (presentación + estado controlado por el padre).
+ * Buscador principal del home: destino, fechas y huéspedes (estado controlado por el padre).
  */
 export default function HomeSearchForm({
   destination,
@@ -15,65 +15,65 @@ export default function HomeSearchForm({
   onSearchClick,
 }) {
   return (
-    <div className="grid gap-3 p-4 sm:grid-cols-[1.2fr_0.9fr_0.9fr_0.7fr_auto] sm:items-end sm:gap-2 sm:p-5">
-      <div className="grid gap-1">
+    <div className="grid gap-3 bg-surface p-4 sm:grid-cols-[1.15fr_0.95fr_0.95fr_0.75fr_auto] sm:items-end sm:gap-3 sm:p-5">
+      <div className="grid gap-1.5">
         <span
-          className="text-xs font-medium text-zinc-700"
+          className="text-xs font-medium text-muted-hotel"
           id="destination-label"
         >
-          ¿A dónde quieres ir?
+          Destino
         </span>
         <input
           aria-labelledby="destination-label"
           value={destination}
           onChange={(e) => onDestinationChange(e.target.value)}
-          className="h-11 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-sm outline-none ring-zinc-900/10 focus:ring-4"
-          placeholder="Antofagasta"
+          className="hotel-input"
+          placeholder="Ciudad o palabra clave"
           data-testid="destination-input"
           inputMode="search"
           autoComplete="off"
         />
       </div>
 
-      <div className="grid gap-1">
+      <div className="grid gap-1.5">
         <span
-          className="text-xs font-medium text-zinc-700"
+          className="text-xs font-medium text-muted-hotel"
           id="start-date-label"
         >
-          ¿Cuándo llegarás?
+          Llegada
         </span>
         <input
           type="date"
           aria-labelledby="start-date-label"
           value={startDate}
           onChange={(e) => onStartDateChange(e.target.value)}
-          className="h-11 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-sm outline-none ring-zinc-900/10 focus:ring-4"
+          className="hotel-input"
         />
       </div>
 
-      <div className="grid gap-1">
-        <span className="text-xs font-medium text-zinc-700" id="end-date-label">
-          ¿Cuándo saldrás?
+      <div className="grid gap-1.5">
+        <span className="text-xs font-medium text-muted-hotel" id="end-date-label">
+          Salida
         </span>
         <input
           type="date"
           aria-labelledby="end-date-label"
           value={endDate}
           onChange={(e) => onEndDateChange(e.target.value)}
-          className="h-11 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-sm outline-none ring-zinc-900/10 focus:ring-4"
+          className="hotel-input"
         />
       </div>
 
-      <label className="grid gap-1">
-        <span className="text-xs font-medium text-zinc-700">Huéspedes</span>
+      <label className="grid gap-1.5">
+        <span className="text-xs font-medium text-muted-hotel">Huéspedes</span>
         <select
           value={guests}
           onChange={(e) => onGuestsChange(Number(e.target.value))}
-          className="h-11 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-sm outline-none ring-zinc-900/10 focus:ring-4"
+          className="hotel-input"
         >
           {[1, 2, 3, 4, 5, 6].map((n) => (
             <option key={n} value={n}>
-              {n} huésped{n === 1 ? "" : "es"}
+              {n} {n === 1 ? "persona" : "personas"}
             </option>
           ))}
         </select>
@@ -83,7 +83,7 @@ export default function HomeSearchForm({
         <button
           type="button"
           onClick={onSearchClick}
-          className="h-11 w-full rounded-2xl bg-orange-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-orange-700 sm:w-auto"
+          className="hotel-btn-primary h-11 w-full px-6 sm:w-auto"
         >
           Buscar
         </button>

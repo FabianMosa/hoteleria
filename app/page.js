@@ -5,7 +5,7 @@ import HomeHeroSection from "@/components/features/home/HomeHeroSection";
  */
 export default function Home() {
   return (
-    <div className="flex min-h-full flex-1 flex-col bg-zinc-50 text-zinc-950">
+    <div className="flex min-h-full flex-1 flex-col bg-background text-foreground">
       <HomeHeroSection />
     </div>
   );

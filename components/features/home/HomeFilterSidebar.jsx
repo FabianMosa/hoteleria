@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Filtros laterales demo del home (MVP). Estilos vía Tailwind (`@styling`).
+ * Filtros del listado en home (MVP): tipo, capacidad mínima y accesibilidad.
  */
 export default function HomeFilterSidebar({
   typeIndividual,
@@ -17,39 +17,39 @@ export default function HomeFilterSidebar({
 }) {
   return (
     <aside className="order-2 sm:order-1">
-      <div className="rounded-3xl border border-zinc-200 bg-zinc-50 p-4">
-        <p className="text-sm font-semibold text-zinc-900">Buscar por</p>
+      <div className="hotel-card bg-surface p-4 sm:p-5">
+        <p className="text-sm font-semibold text-foreground">Refinar búsqueda</p>
 
-        <div className="mt-4 grid gap-4">
+        <div className="mt-4 grid gap-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-zinc-600">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
               Tipo de habitación
             </p>
-            <div className="mt-2 grid gap-2">
-              <label className="flex items-center gap-2 text-sm text-zinc-800">
+            <div className="mt-2 grid gap-2.5">
+              <label className="flex cursor-pointer items-center gap-2.5 text-sm text-foreground">
                 <input
                   type="checkbox"
                   checked={typeIndividual}
                   onChange={(e) => onTypeIndividualChange(e.target.checked)}
-                  className="h-4 w-4 rounded border-zinc-300"
+                  className="h-4 w-4 rounded border-border-hotel text-brand focus:ring-brand"
                 />
                 Individual
               </label>
-              <label className="flex items-center gap-2 text-sm text-zinc-800">
+              <label className="flex cursor-pointer items-center gap-2.5 text-sm text-foreground">
                 <input
                   type="checkbox"
                   checked={typeDoble}
                   onChange={(e) => onTypeDobleChange(e.target.checked)}
-                  className="h-4 w-4 rounded border-zinc-300"
+                  className="h-4 w-4 rounded border-border-hotel text-brand focus:ring-brand"
                 />
                 Doble
               </label>
-              <label className="flex items-center gap-2 text-sm text-zinc-800">
+              <label className="flex cursor-pointer items-center gap-2.5 text-sm text-foreground">
                 <input
                   type="checkbox"
                   checked={typeSuite}
                   onChange={(e) => onTypeSuiteChange(e.target.checked)}
-                  className="h-4 w-4 rounded border-zinc-300"
+                  className="h-4 w-4 rounded border-border-hotel text-brand focus:ring-brand"
                 />
                 Suite
               </label>
@@ -57,17 +57,36 @@ export default function HomeFilterSidebar({
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-zinc-600">
+            <label className="grid gap-1.5">
+              <span className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
+                Capacidad mínima
+              </span>
+              <select
+                value={minCapacity}
+                onChange={(e) => onMinCapacityChange(Number(e.target.value))}
+                className="hotel-input h-10"
+              >
+                {[1, 2, 3, 4, 5, 6].map((n) => (
+                  <option key={n} value={n}>
+                    Desde {n} {n === 1 ? "huésped" : "huéspedes"}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
               Accesibilidad
             </p>
-            <label className="mt-2 flex items-center gap-2 text-sm text-zinc-800">
+            <label className="mt-2 flex cursor-pointer items-center gap-2.5 text-sm text-foreground">
               <input
                 type="checkbox"
                 checked={accessibility}
                 onChange={(e) => onAccessibilityChange(e.target.checked)}
-                className="h-4 w-4 rounded border-zinc-300"
+                className="h-4 w-4 rounded border-border-hotel text-brand focus:ring-brand"
               />
-              Accesible en silla de ruedas
+              Habitación accesible
             </label>
           </div>
         </div>

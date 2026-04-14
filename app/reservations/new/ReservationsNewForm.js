@@ -3,7 +3,20 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function ReservationsNewForm({ initialRoomId }) {
+/** Formatea una fecha local como YYYY-MM-DD para inputs type="date". */
+function toDateInputValue(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+/**
+ * Formulario de nueva reserva.
+ * @param {{ initialRoomId?: string, visualOnly?: boolean }} props
+ * — `visualOnly`: modo portafolio; campos deshabilitados y sin POST (solo maquetación).
+ */
+export default function ReservationsNewForm({ initialRoomId, visualOnly = false }) {
   const router = useRouter();
 
   const [rooms, setRooms] = useState([]);
@@ -40,7 +53,7 @@ export default function ReservationsNewForm({ initialRoomId }) {
       } catch (err) {
         if (!cancelled) {
           setRoomsStatus("error");
-          setRoomsError("No fue posible cargar el catálogo de habitaciones.");
+          setRoomsError("No pudimos cargar el catálogo. Intenta de nuevo.");
         }
       }
     }
@@ -52,24 +65,38 @@ export default function ReservationsNewForm({ initialRoomId }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // En vista previa rellenamos fechas y texto de ejemplo (solo maquetación, no son datos del usuario).
+  useEffect(() => {
+    if (!visualOnly) return;
+    const checkIn = new Date();
+    checkIn.setDate(checkIn.getDate() + 14);
+    const checkOut = new Date(checkIn);
+    checkOut.setDate(checkOut.getDate() + 3);
+    setGuestName("Ejemplo Huésped");
+    setGuestEmail("ejemplo@correo.com");
+    setStartDate(toDateInputValue(checkIn));
+    setEndDate(toDateInputValue(checkOut));
+  }, [visualOnly]);
+
   const canSubmit = useMemo(() => {
+    if (visualOnly) return false;
     return roomId && guestName.trim() && guestEmail.trim() && startDate && endDate;
-  }, [roomId, guestName, guestEmail, startDate, endDate]);
+  }, [visualOnly, roomId, guestName, guestEmail, startDate, endDate]);
 
   async function onSubmit(e) {
     e.preventDefault();
+    if (visualOnly) return;
     setFormError(null);
 
     if (!canSubmit) {
-      setFormError("Completa todos los campos para continuar.");
+      setFormError("Completa todos los campos obligatorios.");
       return;
     }
 
-    // Validación básica en UI (más user-friendly; backend hace la validación final).
     const s = new Date(startDate);
     const end = new Date(endDate);
     if (Number.isNaN(s.getTime()) || Number.isNaN(end.getTime()) || end <= s) {
-      setFormError("El rango de fechas no es válido. Revisa el check-in/check-out.");
+      setFormError("La fecha de salida debe ser posterior al check-in.");
       return;
     }
 
@@ -91,37 +118,36 @@ export default function ReservationsNewForm({ initialRoomId }) {
 
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        // Mensajes más amigables para el MVP.
         if (res.status === 409) {
           setFormError(
-            "Lo sentimos: la habitación no está disponible para las fechas seleccionadas.",
+            "Esa habitación ya está reservada en parte de esas fechas. Prueba otro rango.",
           );
           return;
         }
 
         if (res.status === 404) {
-          setFormError("La habitación seleccionada ya no existe. Elige otra por favor.");
+          setFormError("La habitación ya no está disponible. Elige otra del listado.");
           return;
         }
 
         if (res.status === 400) {
-          setFormError(data?.error || "Revisa los datos del formulario y vuelve a intentarlo.");
+          setFormError(data?.error || "Revisa los datos e intenta de nuevo.");
           return;
         }
 
-        setFormError(data?.error || "No fue posible crear la reserva.");
+        setFormError(data?.error || "No pudimos registrar la reserva.");
         return;
       }
 
       const bookingId = data?.booking?.id;
       if (!bookingId) {
-        setFormError("La reserva se creó, pero no se pudo obtener el id.");
+        setFormError("La reserva se registró, pero no obtuvimos el número de confirmación.");
         return;
       }
 
       router.push(`/reservations/${encodeURIComponent(bookingId)}`);
     } catch (err) {
-      setFormError("Ocurrió un error inesperado. Inténtalo nuevamente.");
+      setFormError("Ocurrió un error inesperado. Intenta nuevamente.");
     } finally {
       setSubmitting(false);
     }
@@ -130,27 +156,30 @@ export default function ReservationsNewForm({ initialRoomId }) {
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
+      aria-label={visualOnly ? "Formulario de reserva (solo demostración visual)" : "Formulario de reserva"}
+      className="hotel-shell rounded-2xl bg-surface p-6 sm:p-8"
     >
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-700">
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="flex flex-col gap-2 sm:col-span-2">
+          <label className="text-sm font-medium text-foreground" htmlFor="room-select">
             Habitación
           </label>
           {roomsStatus === "loading" ? (
-            <div className="h-10 animate-pulse rounded-lg bg-zinc-100" />
+            <div className="h-11 animate-pulse rounded-xl bg-surface-muted" />
           ) : roomsStatus === "error" ? (
             <div className="text-sm text-red-700">{roomsError}</div>
           ) : (
             <select
+              id="room-select"
               value={roomId}
               onChange={(e) => setRoomId(e.target.value)}
-              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
-              required
+              className="hotel-input disabled:cursor-not-allowed disabled:opacity-80"
+              required={!visualOnly}
+              disabled={visualOnly}
             >
               {rooms.map((room) => (
                 <option value={room.id} key={room.id}>
-                  {room.name} (Capacidad {room.capacity})
+                  {room.name} — hasta {room.capacity} huéspedes
                 </option>
               ))}
             </select>
@@ -158,71 +187,90 @@ export default function ReservationsNewForm({ initialRoomId }) {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-700">
-            Nombre
+          <label className="text-sm font-medium text-foreground" htmlFor="guest-name">
+            Nombre completo
           </label>
           <input
+            id="guest-name"
             value={guestName}
             onChange={(e) => setGuestName(e.target.value)}
-            placeholder="Tu nombre"
-            className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
-            required
+            placeholder="Como figura en la reserva"
+            className="hotel-input disabled:cursor-not-allowed disabled:opacity-80"
+            required={!visualOnly}
+            disabled={visualOnly}
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-700">
-            Email
+          <label className="text-sm font-medium text-foreground" htmlFor="guest-email">
+            Correo electrónico
           </label>
           <input
+            id="guest-email"
             value={guestEmail}
             onChange={(e) => setGuestEmail(e.target.value)}
-            placeholder="tu@email.com"
+            placeholder="nombre@ejemplo.com"
             type="email"
-            className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
-            required
+            className="hotel-input disabled:cursor-not-allowed disabled:opacity-80"
+            required={!visualOnly}
+            disabled={visualOnly}
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-700">
-            Check-in / Check-out
-          </label>
-          <div className="grid grid-cols-2 gap-3">
-            <input
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              type="date"
-              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
-              required
-            />
-            <input
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              type="date"
-              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-zinc-950"
-              required
-            />
+        <div className="flex flex-col gap-2 sm:col-span-2">
+          <span className="text-sm font-medium text-foreground">Estadía</span>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-1.5">
+              <label className="text-xs text-muted-hotel" htmlFor="check-in">
+                Check-in
+              </label>
+              <input
+                id="check-in"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                type="date"
+                className="hotel-input disabled:cursor-not-allowed disabled:opacity-80"
+                required={!visualOnly}
+                disabled={visualOnly}
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <label className="text-xs text-muted-hotel" htmlFor="check-out">
+                Check-out
+              </label>
+              <input
+                id="check-out"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                type="date"
+                className="hotel-input disabled:cursor-not-allowed disabled:opacity-80"
+                required={!visualOnly}
+                disabled={visualOnly}
+              />
+            </div>
           </div>
         </div>
       </div>
 
       {formError ? (
-        <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3">
+        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-3">
           <p className="text-sm text-red-800">{formError}</p>
         </div>
       ) : null}
 
-      <div className="mt-6 flex items-center justify-end gap-3">
+      <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
         <button
           type="submit"
-          disabled={submitting}
-          className="inline-flex items-center justify-center rounded-full bg-zinc-950 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:opacity-60"
+          disabled={visualOnly || submitting}
+          className="hotel-btn-primary disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {submitting ? "Creando..." : "Confirmar reserva"}
+          {visualOnly
+            ? "Vista previa (sin envío)"
+            : submitting
+              ? "Confirmando…"
+              : "Confirmar reserva"}
         </button>
       </div>
     </form>
   );
 }
-

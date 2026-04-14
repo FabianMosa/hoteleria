@@ -14,8 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Hotelería — Reservas",
-  description: "MVP de reservas de hotel en Antofagasta.",
+  title: "Hotelería — Estadías en Antofagasta",
+  description:
+    "Reserva habitaciones en Antofagasta: búsqueda clara, tipos de habitación y confirmación en línea.",
 };
 
 export default function RootLayout({ children }) {
@@ -24,9 +25,21 @@ export default function RootLayout({ children }) {
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-zinc-50 text-zinc-950">
+      <body className="flex min-h-full flex-col bg-background text-foreground">
+        <a
+          href="#contenido-principal"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-brand focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg"
+        >
+          Saltar al contenido
+        </a>
         <SiteHeader />
-        <main className="flex flex-1 flex-col">{children}</main>
+        <main
+          id="contenido-principal"
+          tabIndex={-1}
+          className="flex flex-1 flex-col outline-none"
+        >
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

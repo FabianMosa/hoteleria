@@ -1,13 +1,33 @@
 @import "tailwindcss";
 
+/**
+ * Tokens de hotelería: paleta clara fija (sin dark por prefers-color-scheme).
+ * Teal + piedra cálida; sombras en capas para profundidad suave.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f6f4;
+  --foreground: #1c1917;
+  --surface: #ffffff;
+  --surface-muted: #f0efec;
+  --border: #e4e2df;
+  --muted: #57534e;
+  --brand: #0d9488;
+  --brand-hover: #0f766e;
+  --brand-soft: #ccfbf1;
+  --shadow-layer: 0 1px 2px rgb(28 25 23 / 4%), 0 12px 32px -12px rgb(28 25 23 / 10%);
+  --shadow-card-hover: 0 1px 2px rgb(28 25 23 / 5%), 0 16px 40px -14px rgb(28 25 23 / 12%);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border-hotel: var(--border);
+  --color-muted-hotel: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -17,5 +37,68 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--brand-soft) 85%, transparent);
+  color: var(--foreground);
+}
+
+@layer components {
+  .hotel-shell {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-layer);
+  }
+
+  .hotel-card {
+    @apply overflow-hidden rounded-2xl border border-border-hotel bg-surface;
+    box-shadow: 0 1px 2px rgb(28 25 23 / 4%);
+    transition: box-shadow 300ms ease-out;
+  }
+
+  .hotel-card:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .hotel-input {
+    @apply h-11 w-full rounded-xl border border-border-hotel bg-surface px-4 text-sm text-foreground outline-none transition-[border-color,box-shadow] duration-200;
+    @apply focus:border-brand focus:ring-4 focus:ring-brand/15;
+  }
+
+  .hotel-input:hover:not(:focus) {
+    @apply border-stone-300;
+  }
+
+  .hotel-btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white;
+    @apply shadow-sm transition-[transform,background-color,box-shadow] duration-200 ease-out;
+    @apply hover:bg-brand-hover hover:shadow-md active:scale-[0.98];
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+
+  .hotel-btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-border-hotel bg-surface px-5 py-2.5 text-sm font-semibold text-foreground;
+    @apply transition-[transform,background-color,border-color] duration-200 ease-out;
+    @apply hover:border-stone-300 hover:bg-surface-muted active:scale-[0.98];
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+
+  .hotel-link-nav {
+    @apply inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-muted-hotel transition-colors duration-200;
+    @apply hover:bg-surface-muted hover:text-foreground;
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+
+  /* Enlace de navegación cuando coincide con la ruta actual (`SiteHeader`). */
+  .hotel-link-nav-active {
+    @apply bg-brand-soft text-brand-hover;
+  }
+
+  .hotel-footer-link {
+    @apply rounded-md text-sm font-medium text-muted-hotel transition-colors duration-200;
+    @apply hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
 }

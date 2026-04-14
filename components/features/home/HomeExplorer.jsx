@@ -8,8 +8,7 @@ import HomeFilterSidebar from "./HomeFilterSidebar";
 import HomeResultsSection from "./HomeResultsSection";
 
 /**
- * Orquestador de la feature Home: datos (`useRooms`) + filtros puros (`filterRooms`) + subcomponentes.
- * Alineado con `ai-team/orchestrator.md`: UI en `@frontend`, dominio remoto en API.
+ * Orquestador del home: datos (`useRooms`), filtros (`filterRooms`) y layout responsive.
  */
 export default function HomeExplorer() {
   const { rooms, status } = useRooms();
@@ -55,7 +54,7 @@ export default function HomeExplorer() {
   }, [startDate, endDate, guests]);
 
   return (
-    <div className="rounded-3xl border border-zinc-200 bg-white shadow-sm">
+    <div className="hotel-shell overflow-hidden rounded-3xl ring-1 ring-border-hotel/50">
       <HomeSearchForm
         destination={destination}
         onDestinationChange={setDestination}
@@ -66,13 +65,13 @@ export default function HomeExplorer() {
         guests={guests}
         onGuestsChange={setGuests}
         onSearchClick={() => {
-          /* MVP: el filtrado es reactivo; el botón mantiene el patrón UX del buscador */
+          /* MVP: el filtrado es reactivo; el botón refuerza el patrón de buscador */
         }}
       />
 
-      <div className="border-t border-zinc-200" />
+      <div className="h-px bg-border-hotel" />
 
-      <div className="grid gap-6 p-4 sm:grid-cols-[260px_1fr] sm:p-6">
+      <div className="grid gap-6 bg-surface-muted/40 p-4 sm:grid-cols-[minmax(0,15rem)_1fr] sm:p-6 lg:grid-cols-[minmax(0,17rem)_1fr]">
         <HomeFilterSidebar
           typeIndividual={typeIndividual}
           onTypeIndividualChange={setTypeIndividual}
