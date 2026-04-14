@@ -79,8 +79,11 @@ export default function SiteFooter() {
               Hotelería
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted-hotel">
-              Espacios tranquilos para tu descanso. Elegí fechas, habitación y
-              listo: confirmación inmediata, sin cuentas de usuario.
+              Espacios tranquilos para tu descanso. Elige fechas, habitación y
+              listo.
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-hotel">
+              Confirmación inmediata, sin cuentas de usuario.
             </p>
           </div>
 
