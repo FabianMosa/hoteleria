@@ -152,8 +152,8 @@ export default function SiteFooter() {
 
         <div className="mt-10 border-t border-border-hotel/80 pt-8">
           <p className="text-center text-[11px] leading-relaxed text-muted-hotel sm:text-left">
-            © {new Date().getFullYear()} Hotelería · Desarrollo: Bernardo
-            Morales · Todos los derechos reservados.
+            © {new Date().getFullYear()} Hotelería · Dev. Bernardo Morales.
+            Todos los derechos reservados.
           </p>
         </div>
       </div>
