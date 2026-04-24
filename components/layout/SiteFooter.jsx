@@ -155,7 +155,7 @@ export default function SiteFooter() {
 
         <div className="mt-10 border-t border-border-hotel/80 pt-8">
           <p className="text-center text-[11px] leading-relaxed text-muted-hotel sm:text-left">
-            © {new Date().getFullYear()} Hotelería · Desarrollado por{" "}
+            © {new Date().getFullYear()} Hotelería. Desarrollado por{" "}
             {/* Enlace destacado del autor para dar mayor visibilidad en el pie. */}
             <a
               href="https://www.linkedin.com/in/bernardo-morales-848517310/"
