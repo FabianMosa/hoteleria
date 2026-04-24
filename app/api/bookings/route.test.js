@@ -38,6 +38,7 @@ describe('POST /api/bookings (Medium Test)', () => {
       roomId: '123',
       guestName: 'Juan',
       guestEmail: 'juan@test.com',
+      paymentMethod: 'CARD',
       startDate: '2026-01-01',
       endDate: '2026-01-05',
     });
@@ -61,6 +62,7 @@ describe('POST /api/bookings (Medium Test)', () => {
   it('debe fallar (400) si el email es inválido', async () => {
     const req = createRequest({ 
       roomId: '123', guestName: 'Juan', guestEmail: 'invalid-email',
+      paymentMethod: 'CARD',
       startDate: '2025-01-01', endDate: '2025-01-05'
     });
     
@@ -76,6 +78,7 @@ describe('POST /api/bookings (Medium Test)', () => {
 
     const req = createRequest({ 
       roomId: 'no-exist', guestName: 'Juan', guestEmail: 'juan@test.com',
+      paymentMethod: 'CARD',
       startDate: '2025-01-01', endDate: '2025-01-05'
     });
     
@@ -92,6 +95,7 @@ describe('POST /api/bookings (Medium Test)', () => {
 
     const req = createRequest({ 
       roomId: '123', guestName: 'Juan', guestEmail: 'juan@test.com',
+      paymentMethod: 'CARD',
       startDate: '2025-01-01', endDate: '2025-01-05'
     });
     
@@ -105,10 +109,11 @@ describe('POST /api/bookings (Medium Test)', () => {
   it('debe crear reserva (201) si está disponible', async () => {
     prisma.room.findUnique.mockResolvedValueOnce({ id: '123', name: 'Suite' });
     findOverlappingConfirmedBooking.mockResolvedValueOnce(null);
-    prisma.booking.create.mockResolvedValueOnce({ id: 'booking-1', status: 'CONFIRMED' });
+    prisma.booking.create.mockResolvedValueOnce({ id: 'booking-1', status: 'CONFIRMED', paymentMethod: 'CARD' });
 
     const req = createRequest({ 
       roomId: '123', guestName: 'Juan', guestEmail: 'juan@test.com',
+      paymentMethod: 'CARD',
       startDate: '2025-01-01', endDate: '2025-01-05'
     });
     
@@ -117,5 +122,22 @@ describe('POST /api/bookings (Medium Test)', () => {
     
     expect(res.status).toBe(201);
     expect(json.booking.id).toBe('booking-1');
+  });
+
+  it('debe fallar (400) si el método de pago no es válido', async () => {
+    const req = createRequest({
+      roomId: '123',
+      guestName: 'Juan',
+      guestEmail: 'juan@test.com',
+      paymentMethod: 'paypal',
+      startDate: '2025-01-01',
+      endDate: '2025-01-05',
+    });
+
+    const res = await POST(req);
+    const json = await res.json();
+
+    expect(res.status).toBe(400);
+    expect(json.error).toBe('Invalid payload');
   });
 });

@@ -28,7 +28,8 @@ export default function HomeExplorer() {
     () =>
       filterRooms(rooms, {
         destination,
-        minCapacity,
+        // El selector principal de huéspedes también debe reflejarse en el filtro del listado.
+        minCapacity: Math.max(Number(minCapacity ?? 1), Number(guests ?? 1)),
         typeIndividual,
         typeDoble,
         typeSuite,
@@ -38,6 +39,7 @@ export default function HomeExplorer() {
       rooms,
       destination,
       minCapacity,
+      guests,
       typeIndividual,
       typeDoble,
       typeSuite,

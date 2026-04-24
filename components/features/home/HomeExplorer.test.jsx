@@ -49,4 +49,22 @@ describe("HomeExplorer (Basic Component Test)", () => {
       expect(screen.queryByText("Standard Room")).not.toBeInTheDocument();
     });
   });
+
+  it("debe filtrar habitaciones según la cantidad de huéspedes", async () => {
+    render(<HomeExplorer />);
+
+    await waitFor(() => {
+      expect(screen.getByText("Suite Presidential")).toBeInTheDocument();
+      expect(screen.getByText("Standard Room")).toBeInTheDocument();
+    });
+
+    const guestsSelect = screen.getByTestId("guests-select");
+    const user = userEvent.setup();
+    await user.selectOptions(guestsSelect, "3");
+
+    await waitFor(() => {
+      expect(screen.queryByText("Standard Room")).not.toBeInTheDocument();
+      expect(screen.getByText("Suite Presidential")).toBeInTheDocument();
+    });
+  });
 });

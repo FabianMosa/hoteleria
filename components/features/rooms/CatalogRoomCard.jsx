@@ -29,7 +29,9 @@ export default function CatalogRoomCard({ room }) {
         />
         <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 border-t border-border-hotel/80 p-5">
           <div className="flex min-w-0 flex-col gap-2">
-            <h2 className="text-lg font-semibold leading-snug text-foreground">{room.name}</h2>
+            <h2 className="text-lg font-semibold leading-snug text-foreground">
+              {room.name}
+            </h2>
             <span className="w-fit max-w-full rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-semibold leading-tight text-brand-hover sm:px-3 sm:text-xs">
               {capacityLabel}
             </span>
@@ -61,9 +63,7 @@ export default function CatalogRoomCard({ room }) {
         >
           <span>{portfolioDemo ? "Reservar" : "Reservar esta habitación"}</span>
           {portfolioDemo ? (
-            <span className="text-[10px] font-normal leading-none text-white/90">
-              Vista demo
-            </span>
+            <span className="text-[10px] font-normal leading-none text-white/90"></span>
           ) : null}
         </Link>
         <Link

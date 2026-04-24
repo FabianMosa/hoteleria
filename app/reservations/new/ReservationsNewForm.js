@@ -18,6 +18,11 @@ function toDateInputValue(d) {
  */
 export default function ReservationsNewForm({ initialRoomId, visualOnly = false }) {
   const router = useRouter();
+  const paymentMethodOptions = [
+    { value: "CARD", label: "Tarjeta (crédito/débito)" },
+    { value: "TRANSFER", label: "Transferencia bancaria" },
+    { value: "CASH", label: "Efectivo al check-in" },
+  ];
 
   const [rooms, setRooms] = useState([]);
   const [roomsStatus, setRoomsStatus] = useState("loading"); // loading | error | ready
@@ -26,6 +31,7 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
   const [roomId, setRoomId] = useState(initialRoomId);
   const [guestName, setGuestName] = useState("");
   const [guestEmail, setGuestEmail] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("CARD");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -80,8 +86,15 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
 
   const canSubmit = useMemo(() => {
     if (visualOnly) return false;
-    return roomId && guestName.trim() && guestEmail.trim() && startDate && endDate;
-  }, [visualOnly, roomId, guestName, guestEmail, startDate, endDate]);
+    return (
+      roomId &&
+      guestName.trim() &&
+      guestEmail.trim() &&
+      paymentMethod &&
+      startDate &&
+      endDate
+    );
+  }, [visualOnly, roomId, guestName, guestEmail, paymentMethod, startDate, endDate]);
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -111,6 +124,7 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
           roomId,
           guestName,
           guestEmail,
+          paymentMethod,
           startDate,
           endDate,
         }),
@@ -217,12 +231,14 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
           />
         </div>
 
+
+
         <div className="flex flex-col gap-2 sm:col-span-2">
           <span className="text-sm font-medium text-foreground">Estadía</span>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="grid gap-1.5">
               <label className="text-xs text-muted-hotel" htmlFor="check-in">
-                Check-in
+                Ingreso
               </label>
               <input
                 id="check-in"
@@ -236,7 +252,7 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
             </div>
             <div className="grid gap-1.5">
               <label className="text-xs text-muted-hotel" htmlFor="check-out">
-                Check-out
+                Salida
               </label>
               <input
                 id="check-out"
@@ -249,6 +265,27 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
               />
             </div>
           </div>
+        </div>
+
+        <div className="flex flex-col gap-2 sm:col-span-2">
+          <label className="text-sm font-medium text-foreground" htmlFor="payment-method">
+            Método de pago
+          </label>
+          {/* Selector explícito para registrar la preferencia de pago del huésped en la reserva. */}
+          <select
+            id="payment-method"
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+            className="hotel-input disabled:cursor-not-allowed disabled:opacity-80"
+            required={!visualOnly}
+            disabled={visualOnly}
+          >
+            {paymentMethodOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -265,10 +302,10 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
           className="hotel-btn-primary disabled:cursor-not-allowed disabled:opacity-60"
         >
           {visualOnly
-            ? "Vista previa (sin envío)"
+            ? "Vista previa (sin captura de datos. espera implementación de PSP)"
             : submitting
               ? "Confirmando…"
-              : "Confirmar reserva"}
+              : "Confirmar reserva (espera implementación de PSP)"}
         </button>
       </div>
     </form>

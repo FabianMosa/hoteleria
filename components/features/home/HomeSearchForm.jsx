@@ -1,5 +1,28 @@
 "use client";
 
+const GUEST_OPTIONS = [1, 2, 3];
+const LABEL_CLASS = "text-xs font-medium text-muted-hotel";
+
+/**
+ * Campo de fecha reutilizable para mantener consistencia visual y semántica.
+ */
+function DateField({ id, label, value, onChange }) {
+  return (
+    <div className="grid gap-1.5">
+      <span className={LABEL_CLASS} id={id}>
+        {label}
+      </span>
+      <input
+        type="date"
+        aria-labelledby={id}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="hotel-input"
+      />
+    </div>
+  );
+}
+
 /**
  * Buscador principal del home: destino, fechas y huéspedes (estado controlado por el padre).
  */
@@ -17,10 +40,7 @@ export default function HomeSearchForm({
   return (
     <div className="grid gap-3 bg-surface p-4 sm:grid-cols-[1.15fr_0.95fr_0.95fr_0.75fr_auto] sm:items-end sm:gap-3 sm:p-5">
       <div className="grid gap-1.5">
-        <span
-          className="text-xs font-medium text-muted-hotel"
-          id="destination-label"
-        >
+        <span className={LABEL_CLASS} id="destination-label">
           Destino
         </span>
         <input
@@ -35,43 +55,29 @@ export default function HomeSearchForm({
         />
       </div>
 
-      <div className="grid gap-1.5">
-        <span
-          className="text-xs font-medium text-muted-hotel"
-          id="start-date-label"
-        >
-          Llegada
-        </span>
-        <input
-          type="date"
-          aria-labelledby="start-date-label"
-          value={startDate}
-          onChange={(e) => onStartDateChange(e.target.value)}
-          className="hotel-input"
-        />
-      </div>
+      <DateField
+        id="start-date-label"
+        label="Llegada"
+        value={startDate}
+        onChange={onStartDateChange}
+      />
 
-      <div className="grid gap-1.5">
-        <span className="text-xs font-medium text-muted-hotel" id="end-date-label">
-          Salida
-        </span>
-        <input
-          type="date"
-          aria-labelledby="end-date-label"
-          value={endDate}
-          onChange={(e) => onEndDateChange(e.target.value)}
-          className="hotel-input"
-        />
-      </div>
+      <DateField
+        id="end-date-label"
+        label="Salida"
+        value={endDate}
+        onChange={onEndDateChange}
+      />
 
       <label className="grid gap-1.5">
-        <span className="text-xs font-medium text-muted-hotel">Huéspedes</span>
+        <span className={LABEL_CLASS}>Huéspedes</span>
         <select
           value={guests}
           onChange={(e) => onGuestsChange(Number(e.target.value))}
           className="hotel-input"
+          data-testid="guests-select"
         >
-          {[1, 2, 3, 4, 5, 6].map((n) => (
+          {GUEST_OPTIONS.map((n) => (
             <option key={n} value={n}>
               {n} {n === 1 ? "persona" : "personas"}
             </option>

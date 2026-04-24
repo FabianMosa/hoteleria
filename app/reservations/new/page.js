@@ -28,20 +28,7 @@ export default function ReservationsNewPage({ searchParams }) {
           <div className="mb-6 rounded-2xl border border-amber-200/90 bg-amber-50 p-4 text-sm text-amber-950 sm:p-5">
             <p className="font-semibold">Sin captura de datos</p>
             <p className="mt-1.5 leading-relaxed text-amber-900/95">
-              Los valores mostrados son de ejemplo. Para reservas reales, desactivá{" "}
-              <code className="rounded bg-amber-100/90 px-1.5 py-0.5 text-xs">
-                NEXT_PUBLIC_PORTFOLIO_DEMO
-              </code>{" "}
-              en el entorno.
-            </p>
-            <p className="mt-3 text-xs text-amber-900/85">
-              <Link href="/rooms" className="font-semibold text-brand-hover underline">
-                Catálogo de habitaciones
-              </Link>
-              {" · "}
-              <Link href="/" className="font-semibold text-brand-hover underline">
-                Inicio
-              </Link>
+              Los valores mostrados son de ejemplo. A la espera de implementación de PSP.
             </p>
           </div>
         ) : null}

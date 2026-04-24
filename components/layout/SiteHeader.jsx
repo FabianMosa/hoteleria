@@ -31,11 +31,6 @@ export default function SiteHeader() {
             <p className="truncate text-sm font-semibold tracking-tight text-foreground">
               Hotelería
             </p>
-            <p className="truncate text-xs text-muted-hotel">
-              {portfolioDemo
-                ? "Demo — solo exploración"
-                : "Reservas directas, sin complicaciones"}
-            </p>
           </div>
         </Link>
 

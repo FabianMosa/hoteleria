@@ -7,6 +7,13 @@ function formatDate(dateValue) {
   return d.toLocaleDateString("es-ES");
 }
 
+function formatPaymentMethod(method) {
+  if (method === "CARD") return "Tarjeta";
+  if (method === "TRANSFER") return "Transferencia";
+  if (method === "CASH") return "Efectivo";
+  return "No especificado";
+}
+
 export default async function ReservationConfirmationPage({ params }) {
   const bookingId = params?.id;
 
@@ -118,6 +125,15 @@ export default async function ReservationConfirmationPage({ params }) {
                 Email
               </dt>
               <dd className="mt-1 break-all text-foreground">{booking.guestEmail}</dd>
+            </div>
+
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-hotel">
+                Método de pago
+              </dt>
+              <dd className="mt-1 text-foreground">
+                {formatPaymentMethod(booking.paymentMethod)}
+              </dd>
             </div>
           </dl>
 

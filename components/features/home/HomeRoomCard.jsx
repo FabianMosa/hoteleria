@@ -4,7 +4,12 @@ import RoomCoverImage from "@/components/features/rooms/RoomCoverImage";
 /**
  * Tarjeta de habitación en el home: bloque superior enlaza a la ficha `/rooms/[id]`; los botones mantienen reserva y atajo explícito.
  */
-export default function HomeRoomCard({ room, reserveHref, detailHref, portfolioDemo }) {
+export default function HomeRoomCard({
+  room,
+  reserveHref,
+  detailHref,
+  portfolioDemo,
+}) {
   const n = Number(room?.capacity);
   // Texto legible sin abreviar mal; nowrap evita cortes raros junto a overflow-hidden del card.
   const capacityLabel = !Number.isFinite(n)
@@ -62,9 +67,7 @@ export default function HomeRoomCard({ room, reserveHref, detailHref, portfolioD
         >
           <span>Reservar</span>
           {portfolioDemo ? (
-            <span className="text-[10px] font-normal leading-none text-white/90">
-              Vista demo
-            </span>
+            <span className="text-[10px] font-normal leading-none text-white/90"></span>
           ) : null}
         </Link>
         <Link

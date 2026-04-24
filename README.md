@@ -7,6 +7,7 @@ Next.js (App Router), Prisma, PostgreSQL. Alias de import: `@/` → raíz del re
 - **`app/`** — Rutas y páginas delgadas. Catálogo en `/rooms`; ficha individual en **`/rooms/[id]`** (foto, descripción, botones de reserva y vuelta al catálogo).
 - **`components/layout/`** — Shell global (`SiteHeader`, `SiteFooter`), importados desde `app/layout.js`. El pie añade enlaces típicos de hotel (contacto y redes); conviene ajustar correo, teléfono y URLs en `SiteFooter.jsx` para producción.
 - **`components/features/<dominio>/`** — UI por feature (home, rooms).
+- En `components/features/home/HomeSearchForm.jsx`, priorizar refactor incremental sin cambios funcionales: mantener props controladas por el padre y extraer subcomponentes/constantes reutilizables para reducir duplicación.
 - **`src/lib/hooks/`** — Hooks cliente (p. ej. `useRooms` → `GET /api/rooms`).
 - **`src/lib/rooms/`** — Utilidades puras de filtrado/fechas (MVP; dominio real en API). El home filtra por tipo de habitación (Individual / Doble / Suite), capacidad y accesibilidad.
 - **`ai-team/orchestrator.md`** — Orquestación de agentes y mapeo carpetas ↔ roles.
@@ -32,6 +33,7 @@ npm test
 ### Demo portafolio (solo lectura)
 
 - En `.env`: `NEXT_PUBLIC_PORTFOLIO_DEMO=true` — `POST /api/bookings` responde 403. El flujo de reserva en UI sigue disponible: enlaces a `/reservations/new` y formulario en **vista previa** (campos deshabilitados, valores de ejemplo, sin envío).
+- En modo normal, la reserva solicita además **método de pago** (`CARD`, `TRANSFER`, `CASH`) y se guarda en `Booking.paymentMethod`.
 - Plantilla de variables: [.env.example](./.env.example).
 
 ## Stack

@@ -12,6 +12,12 @@ enum BookingStatus {
   CANCELLED
 }
 
+enum PaymentMethod {
+  CARD
+  TRANSFER
+  CASH
+}
+
 model Room {
   id          String    @id @default(cuid())
   name        String
@@ -43,6 +49,7 @@ model Booking {
 
   guestName  String
   guestEmail String
+  paymentMethod PaymentMethod @default(CARD)
 
   startDate DateTime
   endDate   DateTime
