@@ -43,14 +43,14 @@ export default function HomeSearchForm({
         <span className={LABEL_CLASS} id="destination-label">
           Destino
         </span>
+        {/* Destino fijo por requerimiento de negocio: no se permite búsqueda manual. */}
         <input
           aria-labelledby="destination-label"
-          value={destination}
-          onChange={(e) => onDestinationChange(e.target.value)}
+          value="Ciudad"
+          readOnly
+          aria-readonly="true"
           className="hotel-input"
-          placeholder="Ciudad o palabra clave"
           data-testid="destination-input"
-          inputMode="search"
           autoComplete="off"
         />
       </div>
