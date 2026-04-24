@@ -12,14 +12,14 @@ export default function ReservationsNewPage({ searchParams }) {
       <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
         <header className="mb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-            {portfolioDemo ? "Modo demo · vista previa" : "Paso único"}
+            {portfolioDemo ? "vista previa" : "Paso único"}
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
             Nueva reserva
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-muted-hotel sm:text-base">
             {portfolioDemo
-              ? "Modo portafolio: el formulario es solo visual (campos bloqueados, sin envío ni almacenamiento). Así podés mostrar el flujo completo."
+              ? "El formulario es solo visual (campos bloqueados, sin envío ni almacenamiento)."
               : "Indica habitación, fechas y tus datos. Te llevamos a la confirmación al instante."}
           </p>
         </header>
