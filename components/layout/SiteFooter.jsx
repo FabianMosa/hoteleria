@@ -133,7 +133,7 @@ export default function SiteFooter() {
               </li>
             </ul>
             <ul
-              className="mt-5 flex flex-wrap items-center gap-3"
+              className="mt-5 flex flex-wrap items-center justify-center gap-3 sm:justify-start"
               aria-label="Redes sociales y ubicación"
             >
               {SOCIAL_LINKS.map(({ name, href, icon }) => (
@@ -153,9 +153,9 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-border-hotel/80 pt-8">
+        <div className="mt-5 border-t border-border-hotel/80 pt-8">
           <p className="text-center text-[11px] leading-relaxed text-muted-hotel sm:text-left">
-            © {new Date().getFullYear()} Hotelería. Desarrollado por{" "}
+            © {new Date().getFullYear()}. Hotelería. Dev{" "}
             {/* Enlace destacado del autor para dar mayor visibilidad en el pie. */}
             <a
               href="https://www.linkedin.com/in/bernardo-morales-848517310/"
