@@ -39,3 +39,11 @@ npm test
 ## Stack
 
 Definido en [STACK.md](./STACK.md) (perfil default `next-tailwind`). La UI usa **tema claro** fijo (`app/globals.css`: paleta piedra + acento teal, componentes `hotel-*`). No hay flujo de login: la reserva es con datos de huésped en el formulario.
+
+## Seguridad
+
+- **Next.js fijado en `16.2.6`** (y `eslint-config-next@16.2.6`) para cerrar 13 CVEs HIGH/MODERATE/LOW de la rama 16.2.0–16.2.5: SSRF en WebSocket upgrades, bypass de middleware (segment-prefetch, dynamic params, i18n), DoS en Server Components / Image Optimization / Cache Components, XSS (CSP nonces, `beforeInteractive`) y cache poisoning en RSC.
+- En `package.json` se aplica un `overrides` que fuerza `postcss ≥ 8.5.10` dentro de `next` para neutralizar la copia anidada vulnerable (advisory GHSA-qx2v-qp2m-jg93). Verificable con `npm ls postcss` (debe mostrar `next@16.2.6 → postcss@8.5.15+`).
+- **Prisma alineado en `6.19.3`** (`prisma` y `@prisma/client`) para cerrar la cadena vulnerable `@prisma/config → effect`.
+- El lockfile fuerza versiones parcheadas de dependencias transitivas usadas por tooling (`postcss@8.5.15`, `brace-expansion@5.0.6`, `effect@3.21.0`, `defu@6.1.7`).
+- Tras instalar dependencias, validar con `npm audit` que el árbol queda en `found 0 vulnerabilities`.
