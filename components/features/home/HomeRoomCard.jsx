@@ -31,12 +31,12 @@ export default function HomeRoomCard({
           aspectClassName="aspect-[5/3] sm:aspect-[16/9]"
         />
         {/* Cuerpo en columna + flex-1 para igualar alturas en la grilla; CTAs van fuera del Link. */}
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 border-t border-border-hotel/80 p-4 sm:p-5">
-          <div className="flex min-w-0 flex-col gap-2">
-            <h3 className="text-sm font-semibold leading-snug text-foreground sm:text-base">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:p-6">
+          <div className="flex min-w-0 flex-col gap-2.5">
+            <h3 className="font-serif text-xl font-medium leading-tight text-foreground sm:text-2xl transition-colors group-hover:text-accent-hover">
               {room?.name ?? "Habitación"}
             </h3>
-            <span className="w-fit max-w-full rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-semibold leading-tight text-brand-hover sm:px-3 sm:text-xs">
+            <span className="w-fit max-w-full rounded-md bg-stone-100/80 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted-hotel sm:px-3 sm:text-xs">
               {capacityLabel}
             </span>
           </div>

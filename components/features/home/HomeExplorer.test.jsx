@@ -34,7 +34,7 @@ describe("HomeExplorer (Basic Component Test)", () => {
     expect(global.fetch).toHaveBeenCalledWith("/api/rooms", expect.any(Object));
   });
 
-  it("debe filtrar habitaciones según el destino", async () => {
+  it("el destino debe ser fijo según requerimiento de negocio", async () => {
     render(<HomeExplorer />);
 
     await waitFor(() => {
@@ -42,12 +42,8 @@ describe("HomeExplorer (Basic Component Test)", () => {
     });
 
     const destinationInput = screen.getByTestId("destination-input");
-    const user = userEvent.setup();
-    await user.type(destinationInput, "Suite");
-
-    await waitFor(() => {
-      expect(screen.queryByText("Standard Room")).not.toBeInTheDocument();
-    });
+    expect(destinationInput).toHaveAttribute("readonly");
+    expect(destinationInput).toHaveValue("Ciudad");
   });
 
   it("debe filtrar habitaciones según la cantidad de huéspedes", async () => {

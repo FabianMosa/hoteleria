@@ -10,14 +10,14 @@ export default function ReservationsNewPage({ searchParams }) {
   return (
     <div className="flex flex-1 flex-col bg-background text-foreground">
       <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-        <header className="mb-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+        <header className="mb-10 max-w-2xl">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand">
             {portfolioDemo ? "vista previa" : "Paso único"}
           </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h1 className="mt-3 font-serif text-4xl font-normal tracking-tight text-foreground sm:text-5xl">
             Nueva reserva
           </h1>
-          <p className="mt-3 text-sm leading-relaxed text-muted-hotel sm:text-base">
+          <p className="mt-4 text-base leading-relaxed text-muted-hotel sm:text-lg">
             {portfolioDemo
               ? "El formulario es solo visual (campos bloqueados, sin envío ni almacenamiento)."
               : "Indica habitación, fechas y tus datos. Te llevamos a la confirmación al instante."}

@@ -39,7 +39,7 @@ export default function RoomDetailView({ room, reserveQuery = "" }) {
         <span className="text-foreground">{room.name}</span>
       </nav>
 
-      <article className="hotel-shell overflow-hidden rounded-3xl ring-1 ring-border-hotel/50">
+      <article className="hotel-shell overflow-hidden rounded-[2rem] bg-white/70 backdrop-blur-md border border-white/50 shadow-2xl">
         <RoomCoverImage
           imageUrl={room.imageUrl}
           alt={`Foto de ${room.name}`}
@@ -49,13 +49,13 @@ export default function RoomDetailView({ room, reserveQuery = "" }) {
         <div className="border-t border-border-hotel/80 p-5 sm:p-8">
           <header className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand">
                 Ficha
               </p>
-              <h1 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+              <h1 className="mt-3 font-serif text-3xl font-normal tracking-tight text-brand-dark sm:text-4xl">
                 {room.name}
               </h1>
-              <p className="mt-3 text-sm text-muted-hotel sm:text-base">{capacityLabel}</p>
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wider text-muted-hotel sm:text-base">{capacityLabel}</p>
             </div>
           </header>
 
@@ -71,10 +71,10 @@ export default function RoomDetailView({ room, reserveQuery = "" }) {
             )}
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 border-t border-border-hotel pt-6 sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="mt-10 flex flex-col gap-4 border-t border-white/30 pt-8 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href={reserveHref}
-              className="hotel-btn-primary flex min-h-[2.75rem] w-full flex-col items-center justify-center gap-0.5 rounded-xl px-4 py-2.5 text-center text-sm font-semibold sm:w-auto sm:min-w-[12rem]"
+              className="hotel-btn-primary flex min-h-[3rem] w-full flex-col items-center justify-center gap-0.5 rounded-full px-6 py-2.5 text-center text-sm font-semibold uppercase tracking-wider transition-all duration-300 hover:shadow-lg sm:w-auto sm:min-w-[14rem]"
               aria-label={
                 portfolioDemo
                   ? "Abrir formulario de reserva (vista demo, sin envío)"
@@ -90,7 +90,7 @@ export default function RoomDetailView({ room, reserveQuery = "" }) {
             </Link>
             <Link
               href="/rooms"
-              className="hotel-btn-secondary flex min-h-[2.75rem] w-full items-center justify-center rounded-xl px-4 py-2.5 text-center text-sm font-semibold sm:w-auto sm:min-w-[12rem]"
+              className="hotel-btn-secondary flex min-h-[3rem] w-full items-center justify-center rounded-full px-6 py-2.5 text-center text-sm font-semibold uppercase tracking-wider transition-all duration-300 hover:shadow-md hover:bg-brand/5 sm:w-auto sm:min-w-[14rem]"
             >
               Volver al catálogo
             </Link>
