@@ -56,7 +56,7 @@ jobs:
           
           # Valida que el nombre de usuario no esté vacío
           if [ -z "$CLEAN_USER" ]; then
-            echo "::error::El secreto DOCKERHUB_USERNAME está vacío o no está configurado en GitHub Secrets."
+            echo "::error::El secreto DOCKER_USERNAME está vacío o no está configurado en GitHub Secrets."
             exit 1
           fi
           
