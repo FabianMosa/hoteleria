@@ -17,22 +17,22 @@ export default function CatalogRoomCard({ room }) {
   const detailHref = `/rooms/${encodeURIComponent(room.id)}`;
 
   return (
-    <article className="hotel-card group flex h-full min-h-0 min-w-0 flex-col">
+    <article className="hotel-card group flex h-full min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl bg-white/60 backdrop-blur-md border border-white/40 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]">
       <Link
         href={detailHref}
-        className="flex min-h-0 min-w-0 flex-1 flex-col text-inherit no-underline outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+        className="flex min-h-0 min-w-0 flex-1 flex-col text-inherit no-underline outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
       >
         <RoomCoverImage
           imageUrl={room.imageUrl}
           alt={`Foto de ${room.name}`}
           aspectClassName="aspect-[4/3] sm:aspect-[3/2]"
         />
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 border-t border-border-hotel/80 p-5">
-          <div className="flex min-w-0 flex-col gap-2">
-            <h2 className="text-lg font-semibold leading-snug text-foreground">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 border-t border-white/30 p-6">
+          <div className="flex min-w-0 flex-col gap-3">
+            <h2 className="font-serif text-2xl font-normal leading-snug text-brand-dark">
               {room.name}
             </h2>
-            <span className="w-fit max-w-full rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-semibold leading-tight text-brand-hover sm:px-3 sm:text-xs">
+            <span className="w-fit max-w-full rounded-full bg-brand/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-dark">
               {capacityLabel}
             </span>
           </div>
@@ -51,9 +51,9 @@ export default function CatalogRoomCard({ room }) {
         </div>
       </Link>
 
-      <div className="grid min-w-0 grid-cols-2 gap-2 border-t border-border-hotel/80 px-5 pb-5 pt-3 [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)]">
+      <div className="grid min-w-0 grid-cols-2 gap-3 border-t border-white/30 px-6 pb-6 pt-4 [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)]">
         <Link
-          className="hotel-btn-primary flex min-h-[2.75rem] min-w-0 flex-col items-center justify-center gap-0.5 rounded-xl px-2 py-2 text-center text-xs font-semibold leading-tight sm:px-3 sm:text-sm"
+          className="hotel-btn-primary flex min-h-[3rem] min-w-0 flex-col items-center justify-center gap-0.5 rounded-full px-2 py-2 text-center text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:shadow-lg sm:px-3"
           href={`/reservations/new?roomId=${encodeURIComponent(room.id)}`}
           aria-label={
             portfolioDemo
@@ -68,7 +68,7 @@ export default function CatalogRoomCard({ room }) {
         </Link>
         <Link
           href={detailHref}
-          className="hotel-btn-secondary flex min-h-[2.75rem] min-w-0 items-center justify-center rounded-xl px-2 py-2 text-center text-xs font-semibold leading-tight sm:px-3 sm:text-sm"
+          className="hotel-btn-secondary flex min-h-[3rem] min-w-0 items-center justify-center rounded-full px-2 py-2 text-center text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:shadow-md hover:bg-brand/5 sm:px-3"
         >
           Ver ficha
         </Link>

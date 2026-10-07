@@ -171,11 +171,11 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
     <form
       onSubmit={onSubmit}
       aria-label={visualOnly ? "Formulario de reserva (solo demostración visual)" : "Formulario de reserva"}
-      className="hotel-shell rounded-2xl bg-surface p-6 sm:p-8"
+      className="hotel-shell relative overflow-hidden rounded-2xl bg-white/70 backdrop-blur-md border border-white/50 shadow-2xl p-6 sm:p-10"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="flex flex-col gap-2 sm:col-span-2">
-          <label className="text-sm font-medium text-foreground" htmlFor="room-select">
+          <label className="text-sm font-semibold tracking-wide text-brand-dark" htmlFor="room-select">
             Habitación
           </label>
           {roomsStatus === "loading" ? (
@@ -201,7 +201,7 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-foreground" htmlFor="guest-name">
+          <label className="text-sm font-semibold tracking-wide text-brand-dark" htmlFor="guest-name">
             Nombre completo
           </label>
           <input
@@ -216,7 +216,7 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-foreground" htmlFor="guest-email">
+          <label className="text-sm font-semibold tracking-wide text-brand-dark" htmlFor="guest-email">
             Correo electrónico
           </label>
           <input
@@ -234,7 +234,7 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
 
 
         <div className="flex flex-col gap-2 sm:col-span-2">
-          <span className="text-sm font-medium text-foreground">Estadía</span>
+          <span className="text-sm font-semibold tracking-wide text-brand-dark">Estadía</span>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="grid gap-1.5">
               <label className="text-xs text-muted-hotel" htmlFor="check-in">
@@ -268,7 +268,7 @@ export default function ReservationsNewForm({ initialRoomId, visualOnly = false 
         </div>
 
         <div className="flex flex-col gap-2 sm:col-span-2">
-          <label className="text-sm font-medium text-foreground" htmlFor="payment-method">
+          <label className="text-sm font-semibold tracking-wide text-brand-dark" htmlFor="payment-method">
             Método de pago
           </label>
           {/* Selector explícito para registrar la preferencia de pago del huésped en la reserva. */}

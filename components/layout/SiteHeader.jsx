@@ -19,16 +19,16 @@ export default function SiteHeader() {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="group flex min-w-0 items-center gap-3 rounded-xl outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+          className="group flex min-w-0 items-center gap-3 rounded-xl outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
         >
           <div
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand to-brand-hover text-sm font-bold text-white shadow-md ring-1 ring-white/25 transition-transform duration-200 group-hover:scale-[1.03]"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-accent to-accent-hover text-sm font-serif font-bold text-white shadow-md ring-1 ring-white/25 transition-transform duration-300 group-hover:scale-[1.05]"
             aria-hidden
           >
             H
           </div>
           <div className="min-w-0 leading-tight">
-            <p className="truncate text-sm font-semibold tracking-tight text-foreground">
+            <p className="truncate text-lg font-serif font-semibold tracking-wide text-foreground group-hover:text-accent-hover transition-colors">
               Hotelería
             </p>
           </div>
