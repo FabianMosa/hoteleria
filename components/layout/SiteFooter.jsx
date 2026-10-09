@@ -153,19 +153,19 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-5 border-t border-border-hotel/80 pt-8">
-          <p className="text-center text-[11px] leading-relaxed text-muted-hotel sm:text-left">
-            © {new Date().getFullYear()}. Hotelería. Dev{" "}
+        <div className="mt-5 flex justify-center border-t border-border-hotel/80 pt-8">
+          <p className="text-center text-sm leading-relaxed text-muted-hotel">
+           Hotelería © {new Date().getFullYear()}. Desarrollado por{" "}
             {/* Enlace destacado del autor para dar mayor visibilidad en el pie. */}
             <a
               href="https://portfolio.aux8n.online/"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-sm font-semibold text-gold-500 underline decoration-gold-500/60 underline-offset-4 transition-colors duration-200 hover:text-gold-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              className="rounded-sm font-semibold text-brand underline decoration-brand/60 underline-offset-4 transition-colors duration-200 hover:text-brand/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
               Bernardo Morales
             </a>
-            . Todos los derechos reservados.
+            . Todos Los Derechos Reservados.
           </p>
         </div>
       </div>
